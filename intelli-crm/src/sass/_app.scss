@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@import 'variables';
+
+html { font-size: 10px; }
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  min-height: 100%;
+  background-color: $bg-dark;
+  color: $letters;
+  ul { list-style: none; }
+  a { text-decoration: none; }
+  h1, h2, h3, h4, h5, h6 { margin: 0; }
+}
+
+
+#app {
+  font-family: 'Open Sans', sans-serif;
+  font-size: $base-size;
+}
