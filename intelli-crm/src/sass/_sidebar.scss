@@ -1,0 +1,7 @@
+@import 'variables';
+
+.sidebar {
+  height: calc(100vh - 65px);
+  flex: 1;
+  background-color: $vue-green;
+}
