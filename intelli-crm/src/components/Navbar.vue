@@ -1,6 +1,6 @@
 <template lang='pug'>
-  div
-    h1 JIOO45
+  div.navbar
+    h1.navbar-title intelli-crm
 </template>
 
 <script>
@@ -10,5 +10,5 @@ export default {
 </script>
 
 <style lang="scss">
-
+@import '../sass/_navbar.scss'
 </style>

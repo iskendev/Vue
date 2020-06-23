@@ -1,0 +1,12 @@
+@import './variables';
+
+.navbar {
+  padding: 10px 0;
+
+  &-title {
+    display: inline;
+    padding: 0 5px;
+    font-weight: normal;
+    font-size: 1.8rem;
+  }
+}
