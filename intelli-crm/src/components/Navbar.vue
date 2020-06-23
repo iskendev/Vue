@@ -1,6 +1,6 @@
 <template lang='pug'>
   div.navbar
-    h1.navbar-title intelli-crm 
+    h1.navbar-title(@click='toggleSidebarVisibility') intelli-crm 
       i.fas.fa-power-off
     div.navbar-items
       ul
@@ -11,10 +11,18 @@
 <script>
 export default {
   name: 'Navbar',
+  methods: {
+    toggleSidebarVisibility() {
+      this.$store.commit('toggleSidebarVisibility');
+    }
+  },
   computed: {
     icons() {
       return ['info', 'toggle-on', 'user'] // info: weather, currency, date & time
-    }
+    },
+    // sideBarVisibility() {
+    //   return this.$store.getters.sideBarVisibility;
+    // }
   }
 }
 </script>
