@@ -19,10 +19,7 @@ export default {
   computed: {
     icons() {
       return ['info', 'toggle-on', 'user'] // info: weather, currency, date & time
-    },
-    // sideBarVisibility() {
-    //   return this.$store.getters.sideBarVisibility;
-    // }
+    }
   }
 }
 </script>

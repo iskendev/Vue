@@ -1,12 +1,15 @@
-<template>
-  <div>
-    <!-- <h1>Home</h1> -->
-  </div>
+<template lang='pug'>
+  div
+    h1 Home
 </template>
 
 <script>
 export default {
-  name: 'Navbar'
+  name: '',
+  methods: {},
+  computed: {},
+  mounted: {},
+  watch:{}
 }
 </script>
 

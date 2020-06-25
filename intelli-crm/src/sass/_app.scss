@@ -20,29 +20,11 @@ body {
   font-family: 'Open Sans', sans-serif;
   font-size: $base-size;
 
-  
-
-  @keyframes hide {
-    from {
-      margin-right: -300px;
-    }
-
-    to {
-      margin-right: 0;
-    }
-  }
-
   .main {
     display: flex;
 
-    .hide {
-      animation-name: hide;
-      animation-duration: 2s;
-      // animation-fill-mode: backwards;
-    }
-
     .view {
-      // flex: 4;
+      flex: 4;
     }
   }
 }

@@ -1,6 +1,6 @@
 <template lang='pug'>
   div
-    h1 Todo
+    h1 TimeTracker
 </template>
 
 <script>

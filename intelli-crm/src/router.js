@@ -17,10 +17,37 @@ export default new Router({
     {
       path: '/login',
       name: 'login',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/Login.vue')
+      component: () => import('./views/Login.vue')
+    },
+    {
+      path: '/time-tracker',
+      name: 'time-tracker',
+      component: () => import('./views/TimeTracker.vue')
+    },
+    {
+      path: '/todo',
+      name: 'todo',
+      component: () => import('./views/Todo.vue')
+    },
+    {
+      path: '/expense-tracker',
+      name: 'expense-tracker',
+      component: () => import('./views/ExpenseTracker.vue')
+    },
+    {
+      path: '/relaxer',
+      name: 'relaxer',
+      component: () => import('./views/Relaxer.vue')
+    },
+    {
+      path: '/charts',
+      name: 'charts',
+      component: () => import('./views/Charts.vue')
+    },
+    {
+      path: '/settings',
+      name: 'settings',
+      component: () => import('./views/Settings.vue')
     }
   ]
 })

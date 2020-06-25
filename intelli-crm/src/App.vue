@@ -2,7 +2,7 @@
   div#app
     Navbar
     div.main
-      Sidebar(:class='{ hide:  sidebarVisibility}')
+      Sidebar
       router-view.view
 </template>
 
@@ -14,34 +14,10 @@ export default {
   name: 'App',
   components: {
     Navbar, Sidebar
-  },
-  computed: {
-    sidebarVisibility() {
-      return this.$store.getters.sidebarVisibility;
-    }
   }
-  
 }
 </script>
 
 <style lang="scss">
 @import './sass/_app.scss';
-
-@keyframes hide {
-  from {
-    flex: 1
-  }
-
-  to {
-    flex: none;
-    
-  }
-}
-
-.hide {
-      animation-name: hide;
-      animation-duration: 1s;
-    }
-
-
 </style>

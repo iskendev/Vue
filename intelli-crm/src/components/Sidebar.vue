@@ -1,23 +1,29 @@
 <template lang='pug'>
-  div.sidebar 
+  div.sidebar(v-if='sidebarVisibility')
     ul
-      li(v-for='(title, i) in titles' :index='i')
+      li(v-for='(title, i) in titles' :index='i' @click='redirect(title.path)')
           i(:class="`fas fa-${title.icon}`")
           span {{ title.title }} 
 </template>
-//(v-if='sidebarVisibility')
+
 <script>
 export default {
   name: 'Navbar',
+  methods: {
+    redirect(path) {
+      this.$router.push(path);
+    }
+  },
   computed: {
     titles() {
       return [
-        { title: 'Time tracker', icon: 'clock'},
-        { title: 'Todo', icon: 'pencil-alt'},
-        { title: 'Expense Tracker', icon: 'wallet'},
-        { title: 'Relaxer', icon: 'mug-hot'},
-        { title: 'Charts', icon: 'chart-bar'},
-        { title: 'Settings', icon: 'wrench'}
+        { title: 'Home', icon: 'home', path: '/'},
+        { title: 'Time tracker', icon: 'clock', path: '/time-tracker'},
+        { title: 'Todo', icon: 'pencil-alt', path: '/todo'},
+        { title: 'Expense Tracker', icon: 'wallet', path: '/expense-tracker'},
+        { title: 'Relaxer', icon: 'mug-hot', path: '/relaxer'},
+        { title: 'Charts', icon: 'chart-bar', path: '/charts'},
+        { title: 'Settings', icon: 'wrench', path: '/settings'}
       ]
     },
     sidebarVisibility() {
