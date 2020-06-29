@@ -8,7 +8,7 @@ export default {
   name: '',
   methods: {},
   computed: {},
-  mounted: {},
+  // mounted: {},
   watch:{}
 }
 </script>

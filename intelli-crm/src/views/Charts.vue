@@ -8,8 +8,8 @@ export default {
   name: '',
   methods: {},
   computed: {},
-  mounted: {},
-  watch:{}
+  // mounted: {},
+  // watch:{}
 }
 </script>
 

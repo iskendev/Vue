@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import App from './App.vue'
 import Home from './views/Home.vue'
 
 Vue.use(Router)
@@ -27,7 +26,7 @@ export default new Router({
     {
       path: '/todo',
       name: 'todo',
-      component: () => import('./views/Todo.vue')
+      component: () => import('./views/TaskPlanner.vue')
     },
     {
       path: '/expense-tracker',

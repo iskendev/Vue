@@ -4,7 +4,9 @@
   padding: 20px;
   display: flex;
   justify-content: space-between;
-  border-bottom: .5px solid $letters;
+  border: .5px solid $letters;
+  border-radius: 5px;
+  margin-bottom: 15px;
 
   &-title {
     display: inline;
@@ -12,7 +14,6 @@
     font-size: 1.8rem;
     cursor: pointer;
     color: $letters;
-
 
     .fa-power-off { font-size: 1.5rem; }
   }

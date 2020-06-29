@@ -11,20 +11,20 @@ body {
   background-color: $bg-dark;
   color: $letters;
   ul { list-style: none; margin: 0; padding: 0;}
-  a { text-decoration: none; }
+  a { text-decoration: none; color: inherit; }
   h1, h2, h3, h4, h5, h6 { margin: 0; }
 }
-
 
 #app {
   font-family: 'Open Sans', sans-serif;
   font-size: $base-size;
+  padding: 15px;
 
   .main {
     display: flex;
 
     .view {
-      flex: 4;
+      flex: 7;
     }
   }
 }
