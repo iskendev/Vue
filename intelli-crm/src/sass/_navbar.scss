@@ -4,9 +4,9 @@
   padding: 20px;
   display: flex;
   justify-content: space-between;
-  border: .5px solid $letters;
   border-radius: 5px;
   margin-bottom: 15px;
+  background-color: $bg-blueish;
 
   &-title {
     display: inline;
@@ -15,7 +15,11 @@
     cursor: pointer;
     color: $letters;
 
-    .fa-power-off { font-size: 1.5rem; }
+    &:hover {
+      color: white;
+    }
+
+    .fa-power-off { font-size: 1.5rem }
   }
 
   &-items {
@@ -26,6 +30,12 @@
         margin: 0  0 0 15px;
         cursor: pointer;
         color: $letters;
+
+        i {
+          &:hover {
+            color: white;
+          }
+        }
 
         .fa-toggle-on,
         .fa-toggle-off {

@@ -25,6 +25,10 @@ body {
 
     .view {
       flex: 7;
+      height: calc(100vh - 115px);
+      margin-left: 15px;
+      border-radius: 5px;
+      background-color: $bg-blueish;
     }
   }
 }

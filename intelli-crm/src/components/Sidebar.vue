@@ -19,6 +19,7 @@ export default {
         { title: 'Home', icon: 'home', path: '/' },
         { title: 'Time tracker', icon: 'clock', path: '/time-tracker'},
         { title: 'Todo', icon: 'pencil-alt', path: '/todo'},
+        { title: 'Chat', icon: 'comment-dots', path: '/chat'},
         { title: 'Expense Tracker', icon: 'wallet', path: '/expense-tracker'},
         { title: 'Relaxer', icon: 'mug-hot', path: '/relaxer'},
         { title: 'Charts', icon: 'chart-bar', path: '/charts'},
