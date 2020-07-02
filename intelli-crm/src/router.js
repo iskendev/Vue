@@ -44,9 +44,20 @@ export default new Router({
       component: () => import('./views/Charts.vue')
     },
     {
+      path: '/calender-notes',
+      name: 'calender-notes',
+      component: () => import('./views/CalendarNotes.vue')
+    },
+    {
+      path: '/chat',
+      name: 'chat',
+      component: () => import('./views/Chat.vue')
+    },
+    {
       path: '/settings',
       name: 'settings',
       component: () => import('./views/Settings.vue')
     }
   ]
 })
+b3bec5990cf76f25a56fd574978aa94de258158d

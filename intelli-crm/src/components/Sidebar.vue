@@ -20,10 +20,11 @@ export default {
         { title: 'Time tracker', icon: 'clock', path: '/time-tracker'},
         { title: 'Todo', icon: 'pencil-alt', path: '/todo'},
         { title: 'Chat', icon: 'comment-dots', path: '/chat'},
+        { title: 'Calendar Notes', icon: 'calendar-alt', path: '/calendar-notes'},
         { title: 'Expense Tracker', icon: 'wallet', path: '/expense-tracker'},
         { title: 'Relaxer', icon: 'mug-hot', path: '/relaxer'},
         { title: 'Charts', icon: 'chart-bar', path: '/charts'},
-        { title: 'Settings', icon: 'wrench', path: '/settings'}
+        { title: 'Settings', icon: 'wrench', path: '/settings'},
       ]
     },
     sidebarVisibility() {
