@@ -60,4 +60,3 @@ export default new Router({
     }
   ]
 })
-b3bec5990cf76f25a56fd574978aa94de258158d
