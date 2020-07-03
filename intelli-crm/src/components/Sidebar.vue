@@ -1,7 +1,7 @@
 <template lang='pug'>
   div.sidebar(v-if='sidebarVisibility')
     ul
-      router-link(v-for='(title, i) in titles' :index='i'
+      router-link(v-for='(title, i) in titles' :key='i'
         :to='title.path'
         v-slot="{ href, route, navigate, isActive, isExactActive }" exact)
         li(@click="navigate" :class="[isActive && 'router-link-active', isExactActive && 'router-link-exact-active']")

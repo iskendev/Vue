@@ -1,8 +1,11 @@
+import Vue from 'vue'
 import Vuex from 'vuex'
+
+Vue.use(Vuex)
 
 import ui from './modules/ui'
 
-export default Vuex.createStore({
+export default new Vuex.Store({
   state: {
 
   },
@@ -15,4 +18,4 @@ export default Vuex.createStore({
   modules: {
     ui
   }
-});
+})
