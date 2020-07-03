@@ -9,17 +9,18 @@
 </template>
 
 <script>
+import { useStore } from '../composable/use-store'
+import { computed } from '@vue/composition-api'
+
 export default {
   name: 'Navbar',
-  methods: {
-    toggleSidebarVisibility() {
-      this.$store.commit('toggleSidebarVisibility');
+  setup() {
+    const store = useStore()
+    const toggleSidebarVisibility = () => {
+      store.commit('toggleSidebarVisibility')
     }
-  },
-  computed: {
-    icons() {
-      return ['info', 'toggle-on', 'user'] // info: weather, currency, date & time
-    }
+    const icons = computed(() => ['info', 'toggle-on', 'user'])
+    return { toggleSidebarVisibility, icons }
   }
 }
 </script>
