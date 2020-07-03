@@ -1,6 +1,6 @@
 <template lang='pug'>
   div
-    h1 Calendar Notes
+    h1 Code Snippets
 </template>
 
 <script>
