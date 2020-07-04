@@ -7,19 +7,21 @@
 </template>
 
 <script>
-import Navbar from './components/Navbar';
-import Sidebar from './components/Sidebar';
+import Navbar from './components/Navbar.vue'
+import Sidebar from './components/Sidebar.vue'
 import { provideStore } from './composable/use-store'
+import { defineComponent } from '@vue/composition-api'
 
-export default {
+
+export default defineComponent ({
   name: 'App',
   components: {
     Navbar, Sidebar
   },
   setup(props, { root: { $store } }) {
-    provideStore($store)
+    provideStore($store) // Make store accessible for all components
   }
-}
+})
 </script>
 
 <style lang="scss">

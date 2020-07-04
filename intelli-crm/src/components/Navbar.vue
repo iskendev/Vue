@@ -11,8 +11,9 @@
 <script>
 import { useStore } from '../composable/use-store'
 import { computed } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 
-export default {
+export default  defineComponent ({
   name: 'Navbar',
   setup() {
     const store = useStore()
@@ -22,9 +23,9 @@ export default {
     const icons = computed(() => ['info', 'toggle-on', 'user'])
     return { toggleSidebarVisibility, icons }
   }
-}
+})
 </script>
 
 <style lang="scss">
-@import '../sass/_navbar.scss'
+@import '../sass/_navbar.scss';
 </style>
