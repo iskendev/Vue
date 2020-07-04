@@ -3,10 +3,10 @@ export default {
     isSidebarVisible: true
   },
   getters: {
-    sidebarVisibility: (state) => state.isSidebarVisible
+    sidebarVisibility: (state: any) => state.isSidebarVisible
   },
   mutations: {
-    toggleSidebarVisibility(state) {
+    toggleSidebarVisibility(state: any) {
       state.isSidebarVisible = !state.isSidebarVisible;
     }
   }

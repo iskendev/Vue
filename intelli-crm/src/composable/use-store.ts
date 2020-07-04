@@ -2,7 +2,7 @@
 import { provide, inject } from '@vue/composition-api'
 const storeSymbol = Symbol();
 
-export function provideStore(store) {
+export function provideStore(store: Object) {
   provide(storeSymbol, store)
 }
 
