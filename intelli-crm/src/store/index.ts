@@ -6,6 +6,12 @@ Vue.use(Vuex)
 import ui from './modules/ui'
 import trello from './modules/trello'
 
+// if (localStorage.getItem('columns')) {
+  // columns = JSON.parse(localStorage.getItem('columns'))
+// } else {
+  // columns = trello.state.columns
+// }
+
 export default new Vuex.Store({
   state: {
 

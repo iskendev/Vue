@@ -23,17 +23,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.task-planner {
-  &__list {
-    padding: 15px 0;
-    display: flex;
-    justify-content: space-between;
-
-    &--item {
-      width: 250px;
-      border-radius: 5px;
-      border: 1px solid white;;
-    }
-  }
-}
+@import '../sass/view/_task-planner.scss';
 </style>
