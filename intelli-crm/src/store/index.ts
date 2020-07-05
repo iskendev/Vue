@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 import ui from './modules/ui'
+import trello from './modules/trello'
 
 export default new Vuex.Store({
   state: {
@@ -16,6 +17,6 @@ export default new Vuex.Store({
 
   },
   modules: {
-    ui
+    ui, trello
   }
 })

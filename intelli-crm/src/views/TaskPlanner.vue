@@ -1,18 +1,39 @@
 <template lang='pug'>
-  div
-    h1 Todo
+  div.task-planner
+    ul.task-planner__list
+      li.task-planner__list--item(v-for='(column, index) in columns' :key='index') {{ column.name }}
+        ul 
+          li(v-for='(task, i) in column.tasks' :key='i') {{ task.name }}
 </template>
 
-<script>
-export default {
-  name: '',
-  methods: {},
-  computed: {},
-  // mounted: {},
-  watch:{}
-}
+<script lang='ts'>
+import { useStore } from '../composable/use-store'
+import { computed } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
+
+export default defineComponent({
+  name: 'TaskPlanner',
+  setup() {
+    const store: any = useStore()
+    const columns = computed(() => store.getters.columns)
+
+    return { columns }
+  },
+})
 </script>
 
 <style lang="scss">
+.task-planner {
+  &__list {
+    padding: 15px 0;
+    display: flex;
+    justify-content: space-between;
 
+    &--item {
+      width: 250px;
+      border-radius: 5px;
+      border: 1px solid white;;
+    }
+  }
+}
 </style>
