@@ -1,17 +1,41 @@
 @import '../variables';
 .task-planner {
+  overflow: auto;
+
   &__list {
     padding: 15px 0;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
+    align-items: flex-start;
 
     &--item {
       width: 270px;
-      padding: 10px 15px;
+      padding: 10px 10px;
       border-radius: 5px;
       border: 1px solid white;
       background-color: $trello-board-bg;
       color: $trello-board-letters;
+      margin-right: 15px;
+
+      &-add {
+        border: 0;
+        width: 100%;
+        border-radius: 5px;
+        padding: 10px 5px;
+        box-sizing: border-box;
+        background-color: transparent;
+        cursor: pointer;
+        outline: none;
+
+        &:hover {
+          color: $bg-blueish;
+        }
+
+        &:focus {
+          border: 0;
+          background-color: #eee;
+        }
+      }
 
       ul li {
         background-color: white;
@@ -19,6 +43,7 @@
         padding: 8px 5px;
         border-radius: 5px;
         font-size: 1.4rem;
+        word-wrap: break-word;
       }
     }
   }

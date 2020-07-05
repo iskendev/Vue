@@ -1,5 +1,5 @@
-import uuid from '../../utils/uuid'
-import localStorageSaver from "../../utils/trello-boards-saver"
+import { uuid } from '../../utils/trello'
+import { localStorageSaver } from "../../utils/trello"
 
 let columns = localStorage.getItem('columns') ? 
   localStorage.getItem('columns') : [ {
@@ -73,6 +73,7 @@ let columns = localStorage.getItem('columns') ?
   },];
 
 const trello = {
+  plugins: [localStorageSaver],
   state: {
     // columns: [
       // {
@@ -151,7 +152,9 @@ const trello = {
     columns: (state: any): Array<Object> => state.columns
   },
   mutations: {
-
+    addTask(state: any, payload: any) {
+      state.columns[payload.index].tasks.push(payload.task)
+    }
   },
   actions: {
 
