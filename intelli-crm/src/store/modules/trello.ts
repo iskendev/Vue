@@ -158,6 +158,9 @@ const trello = {
     deleteTask(state: any, payload: any) {
       state.columns[payload.index].tasks = 
         state.columns[payload.index].tasks.filter((task: any) => task.id !== payload.id)
+    },
+    updateColumns(state: any, payload: any) {
+      state.columns = payload
     }
   },
   actions: {

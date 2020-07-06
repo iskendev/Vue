@@ -3,14 +3,11 @@
     ul.task-planner__list
       li.task-planner__list--item(v-for='(column, index) in columns' :key='index') 
         span {{ column.name }}
-        ul
-          draggable(class="dragArea list-group" :list="column.tasks" :clone="clone" 
-            :group="{ name: 'people', pull: pullFunction }"
-            @start="start")
-            li(v-for='(task, i) in column.tasks' :key='i') 
-              span {{ task.name }}
-              i.far.fa-times-circle(@click='deleteTask(index, task.id)')
-            input.task-planner__list--item-add(placeholder='+ Add another card' @keyup.enter='addTask($event, index)')
+        draggable(v-model="column.tasks" v-bind='dragOptions'  @start="start")
+          li(v-for='(task, i) in column.tasks' :key='i') 
+            span {{ task.name }}
+            i.far.fa-times-circle(@click='deleteTask(index, task.id)')
+          input.task-planner__list--item-add(placeholder='+ Add another card' @keyup.enter='addTask($event, index)')
 </template>
 
 <script lang='ts'>
@@ -26,12 +23,11 @@ export default defineComponent({
     draggable
   },
   setup() {
-    // store and computed properties
+    // store
     const store = useStore()
-    const columns = computed(() => store.getters.columns)
     
     // handler for deleting and adding tasks
-    const addDeleteTasksHandler = () => {
+    const tasksHandler = () => {
       const addTask = (e: any, index: number) => {
         let task = {
           description: '',
@@ -53,7 +49,16 @@ export default defineComponent({
     // handler responsible for drag and drop events
     const draggableHandler = () => {
       let controlOnStart = ref(true)
-      let idGlobal = ref(8);
+      let idGlobal = 8
+      let columns = computed({
+        get: () => store.getters.columns,
+        set: (value) => store.commit('updateColumns', value)
+      })
+      let dragOptions = computed(() => ({
+        tag: "ul",
+        animation: 300,
+        group: { name: 'columns', pull: pullFunction }
+      }))
 
       const clone = ({ name }: any) => {
         return { name, id: idGlobal++ };
@@ -64,10 +69,10 @@ export default defineComponent({
       const start = ({ originalEvent }: any) => {
         controlOnStart = originalEvent.ctrlKey;
       }
-      return { controlOnStart, idGlobal, clone, pullFunction, start }
+      return { columns, controlOnStart, idGlobal, clone, pullFunction, start, dragOptions }
     }
 
-    return { columns, ...addDeleteTasksHandler(), ...draggableHandler()}
+    return { ...tasksHandler(), ...draggableHandler() }
   },
 })
 </script>
