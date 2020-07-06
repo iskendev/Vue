@@ -38,12 +38,24 @@
       }
 
       ul li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         background-color: white;
         margin: 10px 0;
         padding: 8px 5px;
         border-radius: 5px;
         font-size: 1.4rem;
         word-wrap: break-word;
+
+        .fa-times-circle { 
+          color: $trello-board-letters;
+        
+          &:hover {
+            color: red;
+            cursor: pointer;
+          }
+        }
       }
     }
   }

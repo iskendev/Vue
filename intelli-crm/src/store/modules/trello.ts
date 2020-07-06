@@ -154,6 +154,10 @@ const trello = {
   mutations: {
     addTask(state: any, payload: any) {
       state.columns[payload.index].tasks.push(payload.task)
+    },
+    deleteTask(state: any, payload: any) {
+      state.columns[payload.index].tasks = 
+        state.columns[payload.index].tasks.filter((task: any) => task.id !== payload.id)
     }
   },
   actions: {
