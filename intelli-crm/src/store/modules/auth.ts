@@ -1,7 +1,7 @@
 import firebase  from 'firebase/app'
 export default {
   state: {
-    isLoggedIn: true
+    isLoggedIn: false
   },
   getters: {
     isLoggedIn: (state: any) => state.isLoggedIn
