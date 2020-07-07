@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 import ui from './modules/ui'
 import trello from './modules/trello'
+import auth from './modules/auth'
 
 // if (localStorage.getItem('columns')) {
   // columns = JSON.parse(localStorage.getItem('columns'))
@@ -23,6 +24,6 @@ export default new Vuex.Store({
 
   },
   modules: {
-    ui, trello
+    ui, trello, auth
   }
 })

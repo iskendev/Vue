@@ -1,0 +1,61 @@
+@import '../variables';
+
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &-form {
+    border: 1px solid $info;
+    min-width: 270px;
+    padding: 15px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+
+    &__input {
+      display: flex;
+      flex-direction: column;
+
+      &--label-icon,
+      &--label-password {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 4px 0 2px;
+      }
+
+      &--label-password {
+        margin-top: 10px;
+      }
+
+      label {
+        font-size: 1.3rem;
+      }
+
+      input {
+        outline: none;
+        padding: 8px;
+        border: 1px solid $info;
+        margin: 5px 0 10px 0;
+        border: 0;
+        border-radius: 3px;
+        background-color: white;
+      }
+    }
+
+    &__btn {
+      button {
+        width: 100%;
+        padding: 10px 5px;
+        margin: 15px 0 10px 0;
+        border-radius: 3px;
+        border: 0;
+        background-color: $info;
+        color: white;
+        cursor: pointer;
+        outline: none;
+      }
+    }
+   
+  }
+}

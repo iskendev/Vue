@@ -2,21 +2,32 @@
   div#app
     Navbar
     div.main
-      Sidebar
+      Sidebar(v-if='isLoggedIn.value')
       router-view.view
 </template>
 
 <script>
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
-import { provideStore } from './composable/use-store'
+import { provideStore, useStore } from './composable/use-store'
+import { onMounted, computed } from '@vue/composition-api'
 export default {
   name: 'App',
   components: {
     Navbar, Sidebar
   },
-  setup(props, { root: { $store } }) {
+  setup(props, { root: { $store, $router } }) {
     provideStore($store)
+    const store = useStore()
+    const isLoggedIn = computed(() => store.getters.isLoggedIn)
+
+    onMounted(() => {
+      if (isLoggedIn.value) {
+        $router.push('/login')
+      }      
+    })
+
+    return { isLoggedIn }
   }
 }
 </script>
