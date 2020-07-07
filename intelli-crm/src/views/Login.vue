@@ -12,6 +12,7 @@
         input(id='password' type='password' v-model='password')
       div.login-form__btn
         button Sign In
+        span or Register
 </template>
 
 <script lang='ts'>
@@ -20,18 +21,19 @@ import { useStore } from '../composable/use-store'
 
 export default defineComponent ({
   name: 'Login',
-  setup() {
+  setup(_, { root: { $router } }) {
     const store = useStore()
     const email = ref('')
     const password = ref('')
 
-    const signIn = () => {
-      store.dispatch('signIn', { email: email.value, password: password.value })
+    const signIn = async () => {
+      try {
+        await store.dispatch('signIn', { email: email.value, password: password.value })
+        $router.push('/')
+      } catch (e) {}
     }
-
     return { email, password, signIn }
   }
-  
 })
 </script>
 

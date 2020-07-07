@@ -2,7 +2,7 @@
   div#app
     Navbar
     div.main
-      Sidebar(v-if='isLoggedIn.value')
+      Sidebar(v-if='isLoggedIn')
       router-view.view
 </template>
 
@@ -22,7 +22,7 @@ export default {
     const isLoggedIn = computed(() => store.getters.isLoggedIn)
 
     onMounted(() => {
-      if (isLoggedIn.value) {
+      if (!isLoggedIn.value) {
         $router.push('/login')
       }      
     })

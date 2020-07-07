@@ -27,18 +27,64 @@
       display: flex;
 
       li {
-        margin: 0  0 0 15px;
-        cursor: pointer;
+        margin: 0 0 0 15px;
         color: $letters;
 
+        .tooltip {
+          position: relative;
+          display: inline-block;
+          
+          &:hover .tooltiptext {
+            visibility: visible;
+          }
+
+          .tooltiptext {
+            visibility: hidden;
+            width: 70px;
+            background-color: $info;
+            color: #fff;
+            text-align: center;
+            padding: 5px 0;
+            border-radius: 6px;
+            right: -10px;
+            position: absolute;
+            z-index: 1;
+            font-size: 1.2rem;
+            top: -30px;
+
+            &::after {
+              content: "";
+              position: absolute;
+              top: 100%;
+              right: 20%;
+              margin-left: -5px;
+              border-width: 5px;
+              border-style: solid;
+              border-color:  $info transparent transparent transparent;
+            }
+          }
+        }
+
+        span {
+          margin-left: 15px;
+        }
+
         i {
+          cursor: pointer;
           &:hover {
             color: white;
           }
         }
 
+        .fa-sign-in-alt {
+          font-size: 1.9rem;
+          transform: translateY(2px);
+          margin-left: 5px;
+        }
+
         .fa-toggle-on,
         .fa-toggle-off {
+          margin-left: 15px;
           font-size: 1.9rem;
           transform: translateY(2px);
         }

@@ -2,10 +2,15 @@
   div.navbar
     h1.navbar-title(@click='toggleSidebarVisibility') intelli-crm 
       i.fas.fa-power-off
-    div.navbar-items(v-if='isLoggedIn.value')
+    div.navbar-items(v-if='isLoggedIn')
       ul
-        li(v-for='(icon, i) in icons' :index='i')
-          i(:class="`fas fa-${icon}`")
+        li
+          i.fas.fa-info
+          i.fas.fa-toggle-on
+          span Iskender
+          div.tooltip <i class='fas fa-sign-in-alt'></i>
+            span.tooltiptext Sign out
+          
 </template>
 
 <script>
@@ -20,8 +25,8 @@ export default  defineComponent ({
     const toggleSidebarVisibility = () => {
       store.commit('toggleSidebarVisibility')
     }
-    const icons = computed(() => ['info', 'toggle-on', 'user'])
-    return { toggleSidebarVisibility, icons, isLoggedIn }
+   
+    return { toggleSidebarVisibility, isLoggedIn }
   }
 })
 </script>

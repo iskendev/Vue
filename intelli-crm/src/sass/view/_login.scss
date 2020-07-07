@@ -55,6 +55,16 @@
         cursor: pointer;
         outline: none;
       }
+      text-align: right;
+
+      span {
+        font-size: 1.3rem;
+        cursor: pointer;
+
+        &:hover {
+          color: white
+        }
+      }
     }
    
   }
