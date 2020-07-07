@@ -37,6 +37,11 @@
         }
       }
 
+      .prioritized_task {
+        background-color: $danger;
+        color: white;
+      }
+
       ul li {
         display: flex;
         justify-content: space-between;
@@ -47,14 +52,26 @@
         border-radius: 5px;
         font-size: 1.4rem;
         word-wrap: break-word;
+        cursor: pointer;
 
-        .fa-times-circle { 
-          color: $trello-board-letters;
-        
-          &:hover {
-            color: red;
-            cursor: pointer;
-          }
+        span {
+          width: 190px;
+        }
+
+        input {
+          border: 0;
+          outline: none;
+          font-size: 1.4rem;
+          font-family: 'Open Sans', sans-serif;
+          width: 190px;
+        }
+
+        .fa-exclamation {
+          margin-right: 8px;
+        }
+
+        .fa-pen {
+          margin-right: 8px
         }
       }
     }

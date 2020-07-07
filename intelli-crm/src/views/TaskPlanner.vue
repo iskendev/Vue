@@ -4,15 +4,18 @@
       li.task-planner__list--item(v-for='(column, index) in columns' :key='index') 
         span {{ column.name }}
         draggable(v-model="column.tasks" v-bind='dragOptions'  @start="start")
-          li(v-for='(task, i) in column.tasks' :key='i') 
+          li(v-for='(task, i) in column.tasks' :key='i' :class='{prioritized_task: task.isPrioritized}')
             span {{ task.name }}
-            i.far.fa-times-circle(@click='deleteTask(index, task.id)')
+            div
+              i.fas.fa-pen(@click='editTask(index, i)')
+              i.fas.fa-exclamation(@click='prioritizeTask(index, i)')
+              i.far.fa-times-circle(@click='deleteTask(index, task.id)')
           input.task-planner__list--item-add(placeholder='+ Add another card' @keyup.enter='addTask($event, index)')
 </template>
 
-<script lang='ts'>
+<script lang='ts'> 
 import { useStore } from '../composable/use-store'
-import { computed, ref } from '@vue/composition-api'
+import { computed, ref, onMounted } from '@vue/composition-api'
 import { defineComponent } from '@vue/composition-api'
 import { uuid } from '../utils/trello'
 const draggable = require('vuedraggable')
@@ -22,13 +25,14 @@ export default defineComponent({
   components: {
     draggable
   },
-  setup() {
+  setup(props, { refs }: any) {
     // store
-    const store = useStore()
+    const store: any = useStore()
     
-    // handler for deleting and adding tasks
+    // managing tasks handler
     const tasksHandler = () => {
-      const addTask = (e: any, index: number) => {
+     // add task
+     const addTask = (e: any, index: number) => {
         let task = {
           description: '',
           name: e.target.value,
@@ -40,10 +44,20 @@ export default defineComponent({
           e.target.value = ''
         }
       }
+      // delete task
       const deleteTask = (index: number, id: string) => {
         store.commit('deleteTask', { index, id })
       }
-      return { addTask, deleteTask }
+      // prioritize task
+      const prioritizeTask = (index:number, i:number) => {
+        store.commit('prioritizeTask', { index, i })
+      }
+      // TODO edit task
+      const editTask = (index:number, i:number) => {
+        // store.commit('editTask', { index, i })
+        console.log('nothing happened');
+      }
+      return { addTask, deleteTask, editTask, prioritizeTask }
     }
 
     // handler responsible for drag and drop events

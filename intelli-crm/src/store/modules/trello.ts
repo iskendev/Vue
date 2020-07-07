@@ -9,19 +9,22 @@ let columns = localStorage.getItem('columns') ?
         description: '',
         name: 'first task',
         id: uuid(),
-        userAssigned: null
+        isPrioritized: false,
+        isEdit: false
       },
       {
         description: '',
         name: 'second task',
         id: uuid(),
-        userAssigned: null
+        isPrioritized: false,
+        isEdit: false
       },
       {
         description: '',
         name: 'third task',
         id: uuid(),
-        userAssigned: null
+        isPrioritized: false,
+        isEdit: false
       },
     ]
   },
@@ -32,19 +35,22 @@ let columns = localStorage.getItem('columns') ?
         description: '',
         name: 'first task',
         id: 1,
-        userAssigned: null
+        isPrioritized: false,
+        isEdit: false
       },
       {
         description: '',
         name: 'second task',
         id: 2,
-        userAssigned: null
+        isPrioritized: false,
+        isEdit: false
       },
       {
         description: '',
         name: 'third task',
         id: 3,
-        userAssigned: null
+        isPrioritized: false,
+        isEdit: false
       },
     ]
   },
@@ -55,19 +61,22 @@ let columns = localStorage.getItem('columns') ?
         description: '',
         name: 'first task',
         id: 1,
-        userAssigned: null
+        isPrioritized: false,
+        isEdit: false
       },
       {
         description: '',
         name: 'second task',
         id: 2,
-        userAssigned: null
+        isPrioritized: false,
+        isEdit: false
       },
       {
         description: '',
         name: 'third task',
         id: 3,
-        userAssigned: null
+        isPrioritized: false,
+        isEdit: false
       },
     ]
   },];
@@ -83,19 +92,19 @@ const trello = {
       //       description: '',
       //       name: 'first task',
       //       id: uuid(),
-      //       userAssigned: null
+      //       isPrioritized: false,
       //     },
       //     {
       //       description: '',
       //       name: 'second task',
       //       id: uuid(),
-      //       userAssigned: null
+      //       isPrioritized: false,
       //     },
       //     {
       //       description: '',
       //       name: 'third task',
       //       id: uuid(),
-      //       userAssigned: null
+      //       isPrioritized: false,
       //     },
       //   ]
       // },
@@ -106,19 +115,19 @@ const trello = {
       //       description: '',
       //       name: 'first task',
       //       id: 1,
-      //       userAssigned: null
+      //       isPrioritized: false,
       //     },
       //     {
       //       description: '',
       //       name: 'second task',
       //       id: 2,
-      //       userAssigned: null
+      //       isPrioritized: false,
       //     },
       //     {
       //       description: '',
       //       name: 'third task',
       //       id: 3,
-      //       userAssigned: null
+      //       isPrioritized: false,
       //     },
       //   ]
       // },
@@ -129,23 +138,23 @@ const trello = {
       //       description: '',
       //       name: 'first task',
       //       id: 1,
-      //       userAssigned: null
+      //       isPrioritized: false,
       //     },
       //     {
       //       description: '',
       //       name: 'second task',
       //       id: 2,
-      //       userAssigned: null
+      //       isPrioritized: false,
       //     },
       //     {
       //       description: '',
       //       name: 'third task',
       //       id: 3,
-      //       userAssigned: null
+      //       isPrioritized: false,
       //     },
       //   ]
       // },
-    // ] 
+    // ]
     columns
   },
   getters: {
@@ -158,6 +167,14 @@ const trello = {
     deleteTask(state: any, payload: any) {
       state.columns[payload.index].tasks = 
         state.columns[payload.index].tasks.filter((task: any) => task.id !== payload.id)
+    },
+    editTask(state: any, payload:any) {
+      state.columns[payload.index].tasks[payload.i].isEdit = 
+        !state.columns[payload.index].tasks[payload.i].isEdit;
+    },
+    prioritizeTask(state: any, payload: any) {
+      state.columns[payload.index].tasks[payload.i].isPrioritized = 
+        !state.columns[payload.index].tasks[payload.i].isPrioritized;
     },
     updateColumns(state: any, payload: any) {
       state.columns = payload
