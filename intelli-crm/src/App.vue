@@ -21,16 +21,19 @@ export default {
   setup(props, { root: { $store, $router } }) {
     provideStore($store)
     const isLoggedIn = computed(() => $store.getters.isLoggedIn)
-    onMounted(() => {
+    const userInfo = computed(() => $store.getters.userInfo)
+
+    onMounted(async () => {
       const user = firebase.auth().currentUser
       if (user) {
         $store.commit('setUserAuth', 'in')
+        await $store.dispatch('getUserInfo')
       } else {
         $store.commit('setUserAuth', 'out')
         $router.push('/login').catch(() => {})
       }
     })
-    return { isLoggedIn }
+    return { isLoggedIn, userInfo }
   }
 }
 </script>

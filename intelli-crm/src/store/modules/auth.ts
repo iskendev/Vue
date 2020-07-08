@@ -2,14 +2,23 @@ import firebase  from 'firebase/app'
 import Vue from 'vue'
 export default {
   state: {
-    isLoggedIn: false
+    isLoggedIn: false,
+    userInfo: {}
   },
   getters: {
-    isLoggedIn: (state: any) => state.isLoggedIn 
+    isLoggedIn: (state: any) => state.isLoggedIn,
+    userInfo: (state: any) => state.userInfo
   },
   mutations: {
     setUserAuth(state: any, payload: any) {
       payload === 'in' ? state.isLoggedIn = true: state.isLoggedIn = false
+    },
+    setUserInfo(state: any, info: any) {
+      state.userInfo = info
+      console.log(state.userInfo)
+    },
+    clearUserInfo(state: any) {
+      state.userInfo = {}
     },
     errorHandler(state: any, e: any) {
       Vue.$toast.open({
@@ -34,9 +43,20 @@ export default {
       const user = firebase.auth().currentUser
       return user ? user.uid : null
     },
-    async signIn({ commit }: any, { email, password }: any) {
+    async getUserInfo({ dispatch, commit }: any) {
+      try {
+        const uid = await dispatch('getUid')
+        const info = (await firebase.database().ref(`/users/${uid}/info`).once('value')).val()
+        commit('setUserInfo', info)
+      } catch (e) { 
+        commit('errorHandler', e)
+        throw e
+      }
+    },
+    async signIn({ commit, dispatch }: any, { email, password }: any) {
       try {
         await firebase.auth().signInWithEmailAndPassword(email, password)
+        await dispatch('getUserInfo')
         commit('setUserAuth', 'in')
       } catch (e) {
         commit('errorHandler', e)

@@ -8,7 +8,7 @@
           i.fas.fa-info
           i.fas.fa-moon(v-if='theme === "dark"' @click='toggleTheme("light")')
           i.fas.fa-sun(v-if='theme === "light"' @click='toggleTheme("dark")')
-          span Iskender
+          span {{ name }}
           div.tooltip <i class='fas fa-sign-in-alt' @click='logOut()'></i>
             span.tooltiptext Sign out
 </template>
@@ -21,8 +21,10 @@ export default  defineComponent ({
   setup(_, { root: { $store, $router } }) {
     // logic
     const isLoggedIn = computed(() => $store.getters.isLoggedIn)
+    const name = computed(() => $store.getters.userInfo.name)
     const logOut = async () => {
       await $store.dispatch('signOut')
+      $store.commit('clearUserInfo')
       $router.push('/login')
     }
 
@@ -35,7 +37,7 @@ export default  defineComponent ({
       $store.commit('toggleTheme', theme)
     }
     
-    return { toggleSidebarVisibility, isLoggedIn, logOut, theme, toggleTheme }
+    return { toggleSidebarVisibility, isLoggedIn, logOut, theme, toggleTheme, name }
   }
 })
 </script>

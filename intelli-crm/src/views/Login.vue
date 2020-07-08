@@ -26,7 +26,7 @@ import { defineComponent, ref, computed } from '@vue/composition-api'
 
 export default defineComponent ({
   name: 'Login',
-  setup(_, { root: {$store, $router } }) {
+  setup(_, { root: { $store, $router } }) {
     const email = ref('')
     const password = ref('')
     const name = ref('')
