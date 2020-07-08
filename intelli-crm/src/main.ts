@@ -4,12 +4,18 @@ import router from './router'
 import store from './store/index'
 import VueCompositionApi from '@vue/composition-api'
 const draggable = require('vuedraggable')
+import VueToast from 'vue-toast-notification'
+import 'vue-toast-notification/dist/theme-default.css'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/database'
 
 Vue.use(VueCompositionApi);
 Vue.use(draggable);
+Vue.use(VueToast, {
+  position: 'top-right',
+  duration: 3000
+});
 
 Vue.config.productionTip = false
 

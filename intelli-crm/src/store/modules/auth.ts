@@ -1,4 +1,5 @@
 import firebase  from 'firebase/app'
+import Vue from 'vue'
 export default {
   state: {
     isLoggedIn: false
@@ -9,6 +10,12 @@ export default {
   mutations: {
     setUserAuth(state: any, payload: any) {
       payload === 'in' ? state.isLoggedIn = true: state.isLoggedIn = false
+    },
+    errorHandler(state: any, e: any) {
+      Vue.$toast.open({
+        message: e.message,
+        type: 'error'
+      })
     }
   },
   actions: {
@@ -19,7 +26,8 @@ export default {
         await firebase.database().ref(`/users/${uid}/info`).set({ name, email })
         commit('setUserAuth', 'in')
       } catch (e) {
-        console.log(e)
+        commit('errorHandler', e)
+        throw e
       }
     },
     getUid() {
@@ -31,7 +39,8 @@ export default {
         await firebase.auth().signInWithEmailAndPassword(email, password)
         commit('setUserAuth', 'in')
       } catch (e) {
-        console.log(e)
+        commit('errorHandler', e)
+        throw e
       }
     },
     async signOut({ commit }: any) {

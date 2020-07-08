@@ -9,7 +9,7 @@
   background-color: $vue-green;
 
   .router-link-active {
-    color: $bg-blueish;
+    color: white;
   }
 
   ul {
@@ -22,7 +22,7 @@
 
     li {
       cursor: pointer;
-      color: white;
+      color: $bg-blueish;
       border: 1px solid transparent;
       width: 100%;
       display: flex;
@@ -31,7 +31,7 @@
       border-radius: 5px;
 
       &:hover {
-        color: $bg-blueish;
+        color: white;
       }
 
       i, span {

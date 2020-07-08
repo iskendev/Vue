@@ -39,5 +39,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../sass/sidebar.scss';
+@import '../sass/_sidebar.scss';
 </style>
