@@ -6,6 +6,7 @@ import VueCompositionApi from '@vue/composition-api'
 const draggable = require('vuedraggable')
 import VueToast from 'vue-toast-notification'
 import 'vue-toast-notification/dist/theme-default.css'
+import './sass/view/_theme.scss'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/database'

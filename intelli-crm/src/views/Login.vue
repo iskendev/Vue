@@ -2,7 +2,7 @@
   div.login
     form.login-form(@submit.prevent='signIn()')
       div.login-form__input
-        //- // TODO create universal component for common use 
+        //- // TODO create universal component for common use // Validation
         div.login-form__input--label-name(v-if='!isRegistered')
           label(for='name') Name
           i.fas.fa-user
@@ -52,9 +52,7 @@ export default defineComponent ({
       }
     }
     const checkIsRegistered = (type: string) => {
-      type === 'sign' ? isRegistered.value = false : isRegistered.value = true
-      console.log(isRegistered.value);
-      
+      type === 'sign' ? isRegistered.value = false : isRegistered.value = true      
     }
     return { name, email, password, signIn, isRegistered, checkIsRegistered }
   }

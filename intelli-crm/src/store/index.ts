@@ -15,10 +15,17 @@ import auth from './modules/auth'
 
 export default new Vuex.Store({
   state: {
-
+    theme: 'dark'
+  },
+  getters: {
+    theme: s => s.theme
   },
   mutations: {
-
+    toggleTheme(state, payload) {
+      state.theme = payload
+      console.log(state.theme);
+      
+    }
   },
   actions: {
 
