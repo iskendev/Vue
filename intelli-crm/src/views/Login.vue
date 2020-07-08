@@ -32,13 +32,29 @@ export default defineComponent ({
     const name = ref('')
     const isRegistered = ref(true)
     const signIn = async () => {
-      try {
-        await $store.dispatch('signIn', { email: email.value, password: password.value })
-        $router.push('/')
-      } catch (e) {}
+      if (isRegistered.value) {
+        try {
+          await $store.dispatch('signIn', {
+            email: email.value, 
+            password: password.value 
+          })
+          $router.push('/')
+        } catch (e) {}
+      } else {
+        try {
+          await $store.dispatch('register', { 
+            name: name.value, 
+            email: email.value, 
+            password: password.value 
+          })
+          $router.push('/')
+        } catch (e) {}
+      }
     }
     const checkIsRegistered = (type: string) => {
       type === 'sign' ? isRegistered.value = false : isRegistered.value = true
+      console.log(isRegistered.value);
+      
     }
     return { name, email, password, signIn, isRegistered, checkIsRegistered }
   }

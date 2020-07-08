@@ -12,6 +12,20 @@ export default {
     }
   },
   actions: {
+    async register({ commit, dispatch }: any, { name, email, password }: any) {
+      try {
+        await firebase.auth().createUserWithEmailAndPassword(email, password)
+        const uid = await dispatch('getUid')
+        await firebase.database().ref(`/users/${uid}/info`).set({ name, email })
+        commit('setUserAuth', 'in')
+      } catch (e) {
+        console.log(e)
+      }
+    },
+    getUid() {
+      const user = firebase.auth().currentUser
+      return user ? user.uid : null
+    },
     async signIn({ commit }: any, { email, password }: any) {
       try {
         await firebase.auth().signInWithEmailAndPassword(email, password)

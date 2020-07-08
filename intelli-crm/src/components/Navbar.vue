@@ -13,19 +13,17 @@
 </template>
 
 <script>
-import { useStore } from '../composable/use-store'
 import { defineComponent, computed, onMounted, ref } from '@vue/composition-api'
 
 export default  defineComponent ({
   name: 'Navbar',
-  setup(_, { root: { $router } }) {
-    const store = useStore()
-    const isLoggedIn = computed(() => store.getters.isLoggedIn)
+  setup(_, { root: { $store, $router } }) {
+    const isLoggedIn = computed(() => $store.getters.isLoggedIn)
     const toggleSidebarVisibility = () => {
-      store.commit('toggleSidebarVisibility')
+      $store.commit('toggleSidebarVisibility')
     }
     const logOut = async () => {
-      await store.dispatch('signOut')
+      await $store.dispatch('signOut')
       $router.push('/login')
     }
     return { toggleSidebarVisibility, isLoggedIn, logOut }
