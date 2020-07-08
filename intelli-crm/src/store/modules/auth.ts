@@ -4,28 +4,25 @@ export default {
     isLoggedIn: false
   },
   getters: {
-    isLoggedIn: (state: any) => state.isLoggedIn
+    isLoggedIn: (state: any) => state.isLoggedIn 
   },
   mutations: {
-    setUserLoggedIn(state: any) {
-      state.isLoggedIn = true
+    setUserAuth(state: any, payload: any) {
+      payload === 'in' ? state.isLoggedIn = true: state.isLoggedIn = false
     }
   },
   actions: {
-    async signIn(context: any, payload: any) {
-      const { dispatch, commit } = context
-      const { email, password } = payload
-      // try {
-      //   await firebase.auth().signInWithEmailAndPassword(email, password)
-      //   commit('setUserLoggedIn')
-      // } catch (e) {
-      //   console.log(e)
-      // }
-      console.log(context, payload );
-      
+    async signIn({ commit }: any, { email, password }: any) {
+      try {
+        await firebase.auth().signInWithEmailAndPassword(email, password)
+        commit('setUserAuth', 'in')
+      } catch (e) {
+        console.log(e)
+      }
     },
-    async signOut() {
+    async signOut({ commit }: any) {
       await firebase.auth().signOut()
+      commit('setUserAuth', 'out')
     }
   }
 }

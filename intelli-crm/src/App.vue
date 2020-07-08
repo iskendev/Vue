@@ -10,7 +10,9 @@
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 import { provideStore, useStore } from './composable/use-store'
-import { onMounted, computed } from '@vue/composition-api'
+import { onMounted, computed, ref } from '@vue/composition-api'
+import firebase  from 'firebase/app'
+
 export default {
   name: 'App',
   components: {
@@ -18,15 +20,16 @@ export default {
   },
   setup(props, { root: { $store, $router } }) {
     provideStore($store)
-    const store = useStore()
-    const isLoggedIn = computed(() => store.getters.isLoggedIn)
-
+    const isLoggedIn = computed(() => $store.getters.isLoggedIn)
     onMounted(() => {
-      if (!isLoggedIn.value) {
-        $router.push('/login')
-      }      
+      const user = firebase.auth().currentUser
+      if (user) {
+        $store.commit('setUserAuth', 'in')
+      } else {
+        $store.commit('setUserAuth', 'out')
+        $router.push('/login').catch(() => {})
+      }
     })
-
     return { isLoggedIn }
   }
 }

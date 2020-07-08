@@ -8,25 +8,27 @@
           i.fas.fa-info
           i.fas.fa-toggle-on
           span Iskender
-          div.tooltip <i class='fas fa-sign-in-alt'></i>
+          div.tooltip <i class='fas fa-sign-in-alt' @click='logOut()'></i>
             span.tooltiptext Sign out
-          
 </template>
 
 <script>
 import { useStore } from '../composable/use-store'
-import { defineComponent, computed } from '@vue/composition-api'
+import { defineComponent, computed, onMounted, ref } from '@vue/composition-api'
 
 export default  defineComponent ({
   name: 'Navbar',
-  setup() {
+  setup(_, { root: { $router } }) {
     const store = useStore()
     const isLoggedIn = computed(() => store.getters.isLoggedIn)
     const toggleSidebarVisibility = () => {
       store.commit('toggleSidebarVisibility')
     }
-   
-    return { toggleSidebarVisibility, isLoggedIn }
+    const logOut = async () => {
+      await store.dispatch('signOut')
+      $router.push('/login')
+    }
+    return { toggleSidebarVisibility, isLoggedIn, logOut }
   }
 })
 </script>

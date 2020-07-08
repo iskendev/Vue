@@ -23,23 +23,21 @@
 
 <script lang='ts'>
 import { defineComponent, ref, computed } from '@vue/composition-api'
-import { useStore } from '../composable/use-store'
 
 export default defineComponent ({
   name: 'Login',
-  setup(_, { root: { $router } }) {
-    const store = useStore()
+  setup(_, { root: {$store, $router } }) {
     const email = ref('')
     const password = ref('')
     const name = ref('')
     const isRegistered = ref(true)
     const signIn = async () => {
       try {
-        await store.dispatch('signIn', { email: email.value, password: password.value })
+        await $store.dispatch('signIn', { email: email.value, password: password.value })
         $router.push('/')
       } catch (e) {}
     }
-    const checkIsRegistered = (type) => {
+    const checkIsRegistered = (type: string) => {
       type === 'sign' ? isRegistered.value = false : isRegistered.value = true
     }
     return { name, email, password, signIn, isRegistered, checkIsRegistered }
