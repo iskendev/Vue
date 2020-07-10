@@ -1,15 +1,45 @@
 @import '../variables';
 .task-planner {
   overflow: auto;
+  
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 
   &__add-board {
     padding: 15px 15px 0 2px;
+    display: flex;
+    align-items: center;
 
-    i {
+    .underlined {
+      text-decoration: underline;
+    }
+
+    .fa-plus {
       cursor: pointer;
 
       &:hover {
         color: $success;
+      }
+    }
+    
+    .fa-image {
+      margin-left: 15px;
+      font-size: 1.8rem;
+      cursor: pointer;
+    }
+    
+    ul {
+      margin-left: 15px;
+      display: flex;
+
+      li { 
+        margin-right: 5px; 
+        cursor: pointer;
+
+        &:hover {
+          text-decoration: underline;
+        }
       }
     }
   }

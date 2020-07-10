@@ -1,10 +1,15 @@
 <template lang='pug'>
-  div.task-planner
+  div.task-planner(:style="{ backgroundImage: image }") 
     task-modal(v-if='showModal' @close="editTask()")
       h3(slot="header") {{ modalHeader === 'board' ? 'Type board title' : 'Edit task' }}
       input.modal-body__input(slot='body' v-model='editableTask.name' @keyup.enter='editTask()')
     div.task-planner__add-board
       i(@click='addBoard()').fas.fa-plus
+      ul
+        li(v-for="(option, i) in backgroundOptions" 
+          :key="i" 
+          :class='{ underlined: option.path === image }' 
+          @click='image = option.path')  {{ option.num }}  
     draggable.task-planner__list(v-model="columns" v-bind='dragOptionsBoards'  @start="start")
       li.task-planner__list--item(v-for='(column, index) in columns' :key='index')
         div.task-planner__list--item-edit
@@ -115,6 +120,20 @@ export default defineComponent({
       }
     }
 
+    // background handler
+    const backgroundHandler = () => {
+      let image = ref('none')
+      const backgroundOptions = ref([
+        { num: 0, path: 'none' },
+        { num: 1, path: 'url(' + require('@/assets/1.jpg') + ')' },
+        { num: 2, path: 'url(' + require('@/assets/2.jpg') + ')' },
+        { num: 3, path: 'url(' + require('@/assets/3.jpg') + ')' },
+        { num: 4, path: 'url(' + require('@/assets/4.jpg') + ')' },
+        { num: 5, path: 'url(' + require('@/assets/5.jpg') + ')' },
+      ])
+      return { backgroundOptions, image }
+    }
+
     // drag & drop handler 
     const draggableHandler = () => {
       let controlOnStart = ref(true)
@@ -146,7 +165,7 @@ export default defineComponent({
       return { columns, controlOnStart, clone, pullFunction, start, dragOptions, dragOptionsBoards }
     }
 
-    return { ...tasksHandler(), ...draggableHandler() }
+    return { ...tasksHandler(), ...draggableHandler(), ...backgroundHandler() }
   },
 })
 </script>
