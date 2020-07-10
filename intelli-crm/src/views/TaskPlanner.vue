@@ -8,10 +8,13 @@
     draggable.task-planner__list(v-model="columns" v-bind='dragOptionsBoards'  @start="start")
       li.task-planner__list--item(v-for='(column, index) in columns' :key='index')
         div.task-planner__list--item-edit
-          span {{ column.name }}
+          div.edit-board-title
+            span(v-if='!changeBoardTitle') {{ column.name }}
+            input.edit-board-title__input(v-else v-model='column.name' @keyup.enter='changeBoardTitle = false')
           span
-            i.fas.fa-pencil-alt
-            i.fas.fa-check
+            i.fas.fa-pencil-alt(v-if="!changeBoardTitle" @click='changeBoardTitle = true')
+            i.fas.fa-check(v-else @click='changeBoardTitle = false')
+            i.far.fa-trash-alt(@click='deleteBoard(index)')
         draggable(v-model="column.tasks" v-bind='dragOptions'  @start="start")
           li(v-for='(task, i) in column.tasks' :key='i' :class='{prioritized_task: task.isPrioritized}')
             span {{ task.name }}
@@ -48,6 +51,12 @@ export default defineComponent({
         modalHeader.value = 'board'
         editableTask.value.name = ''
         showModal.value = true
+      }
+      // change board title
+      const changeBoardTitle = ref(false)
+      // delete board
+      const deleteBoard = (index) => {
+        store.commit('deleteBoard', index)
       }
       // add task
       const addTask = (e, index) => {
@@ -92,7 +101,8 @@ export default defineComponent({
       }
       
       return { 
-        addBoard, 
+        addBoard,
+        deleteBoard,
         addTask, 
         deleteTask, 
         openModal, 
@@ -100,7 +110,8 @@ export default defineComponent({
         showModal, 
         editableTask, 
         editTask,
-        modalHeader 
+        modalHeader,
+        changeBoardTitle 
       }
     }
 

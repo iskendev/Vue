@@ -146,6 +146,9 @@ const trello = {
     addBoard(state: any, name: any) {
       state.columns.push({ name: name, tasks: [] })
     },
+    deleteBoard(state: any, i: any) {
+      state.columns.splice(i, 1)
+    },
     addTask(state: any, payload: any) {
       state.columns[payload.index].tasks.push(payload.task)
     },
