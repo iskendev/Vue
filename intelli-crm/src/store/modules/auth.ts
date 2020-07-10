@@ -15,7 +15,6 @@ export default {
     },
     setUserInfo(state: any, info: any) {
       state.userInfo = info
-      console.log(state.userInfo)
     },
     clearUserInfo(state: any) {
       state.userInfo = {}
