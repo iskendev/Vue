@@ -2,6 +2,18 @@
 .task-planner {
   overflow: auto;
 
+  &__add-board {
+    padding: 15px 15px 0 2px;
+
+    i {
+      cursor: pointer;
+
+      &:hover {
+        color: $success;
+      }
+    }
+  }
+
   &__list {
     padding: 15px 0;
     display: flex;
@@ -9,13 +21,18 @@
     align-items: flex-start;
 
     &--item {
-      width: 270px;
+      min-width: 270px;
       padding: 10px 10px;
       border-radius: 5px;
       border: 1px solid white;
       background-color: $trello-board-bg;
       color: $trello-board-letters;
       margin-right: 15px;
+
+      &-edit {
+        display: flex;
+        justify-content: space-between;
+      }
 
       &-add {
         border: 0;

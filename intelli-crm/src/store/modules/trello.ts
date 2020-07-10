@@ -143,6 +143,9 @@ const trello = {
     columns: (state: any): Array<Object> => state.columns
   },
   mutations: {
+    addBoard(state: any, name: any) {
+      state.columns.push({ name: name, tasks: [] })
+    },
     addTask(state: any, payload: any) {
       state.columns[payload.index].tasks.push(payload.task)
     },
