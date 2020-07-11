@@ -167,9 +167,7 @@ const trello = {
       state.columns = payload
     }
   },
-  actions: {
-
-  }
+  actions: {}
 }
 
 export default trello;
