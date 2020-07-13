@@ -4,61 +4,73 @@ import { localStorageSaver } from "../../utils/trello"
 let columns = localStorage.getItem('columns') ? 
   localStorage.getItem('columns') : [ {
     name: 'todo',
+    isTitleChanging: false,
     tasks: [
       {
         name: 'first task',
         id: uuid(),
-        isPrioritized: false
+        isPrioritized: false,
+        
       },
       {
         name: 'second task',
         id: uuid(),
-        isPrioritized: false
+        isPrioritized: false,
+        isTitleChanging: false
       },
       {
         name: 'third task',
         id: uuid(),
-        isPrioritized: false
+        isPrioritized: false,
+        isTitleChanging: false
       },
     ]
   },
   {
     name: 'todo',
+    isTitleChanging: false,
     tasks: [
       {
         name: 'first task',
         id: uuid(),
-        isPrioritized: false
+        isPrioritized: false,
+        isTitleChanging: false
       },
       {
         name: 'second task',
         id: uuid(),
-        isPrioritized: false
+        isPrioritized: false,
+        isTitleChanging: false
       },
       {
         name: 'third task',
         id: uuid(),
-        isPrioritized: false
+        isPrioritized: false,
+        isTitleChanging: false
       },
     ]
   },
   {
     name: 'todo',
+    isTitleChanging: false,
     tasks: [
       {
         name: 'first task',
         id: uuid(),
-        isPrioritized: false
+        isPrioritized: false,
+        isTitleChanging: false
       },
       {
         name: 'second task',
         id: uuid(),
-        isPrioritized: false
+        isPrioritized: false,
+        isTitleChanging: false
       },
       {
         name: 'third task',
         id: uuid(),
-        isPrioritized: false
+        isPrioritized: false,
+        isTitleChanging: false
       },
     ]
   },];
@@ -145,6 +157,12 @@ const trello = {
   mutations: {
     addBoard(state: any, name: any) {
       state.columns.push({ name: name, tasks: [] })
+    },
+    DonechangeBoardTitle(state: any, index: any) {
+      state.columns[index].isTitleChanging = false
+    },
+    changeBoardTitle(state: any, index: any) {
+      state.columns[index].isTitleChanging = true
     },
     deleteBoard(state: any, i: any) {
       state.columns.splice(i, 1)

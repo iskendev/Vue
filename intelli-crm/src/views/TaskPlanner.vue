@@ -14,11 +14,11 @@
       li.task-planner__list--item(v-for='(column, index) in columns' :key='index')
         div.task-planner__list--item-edit
           div.edit-board-title
-            span(v-if='!changeBoardTitle') {{ column.name }}
-            input.edit-board-title__input(v-else v-model='column.name' @keyup.enter='changeBoardTitle = false')
+            span(v-if='!column.isTitleChanging') {{ column.name }}
+            input.edit-board-title__input(v-else v-model='column.name' @keyup.enter='DonechangeBoardTitleFunc(index)')
           span
-            i.fas.fa-pencil-alt(v-if="!changeBoardTitle" @click='changeBoardTitle = true')
-            i.fas.fa-check(v-else @click='changeBoardTitle = false')
+            i.fas.fa-pencil-alt(v-if="!column.isTitleChanging" @click='changeBoardTitleFunc(index)')
+            i.fas.fa-check(v-else @click='DonechangeBoardTitleFunc(index)')
             i.far.fa-trash-alt(@click='deleteBoard(index)')
         draggable(v-model="column.tasks" v-bind='dragOptions'  @start="start")
           li(v-for='(task, i) in column.tasks' :key='i' :class='{prioritized_task: task.isPrioritized}')
@@ -59,6 +59,12 @@ export default defineComponent({
       }
       // change board title
       const changeBoardTitle = ref(false)
+      const changeBoardTitleFunc = (index) => {
+        store.commit('changeBoardTitle', index)
+      }
+      const DonechangeBoardTitleFunc = (index) => {
+        store.commit('DonechangeBoardTitle', index)
+      }
       // delete board
       const deleteBoard = (index) => {
         store.commit('deleteBoard', index)
@@ -116,7 +122,9 @@ export default defineComponent({
         editableTask, 
         editTask,
         modalHeader,
-        changeBoardTitle 
+        changeBoardTitle,
+        DonechangeBoardTitleFunc,
+        changeBoardTitleFunc
       }
     }
 
