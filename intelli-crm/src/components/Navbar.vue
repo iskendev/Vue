@@ -8,40 +8,32 @@
           i.fas.fa-info
           i.fas.fa-moon(v-if='theme === "dark"' @click='toggleTheme("light")')
           i.fas.fa-sun(v-if='theme === "light"' @click='toggleTheme("dark")')
-          span {{ name }}
+          span {{ userName }}
           div.tooltip <i class='fas fa-sign-in-alt' @click='logOut()'></i>
             span.tooltiptext Sign out
 </template>
 
 <script>
-import { defineComponent, computed, onMounted, ref } from '@vue/composition-api'
-
-export default  defineComponent ({
+import { authHandler } from '../composable/views/auth'
+export default ({
   name: 'Navbar',
   setup(_, { root: { $store, $router } }) {
-    // logic
-    const isLoggedIn = computed(() => $store.getters.isLoggedIn)
-    const name = computed(() => $store.getters.userInfo.name)
-    const logOut = async () => {
-      await $store.dispatch('signOut')
-      $store.commit('clearUserInfo')
-      $router.push('/login')
-    }
+    const { isLoggedIn, logOut, userName } = authHandler($store, $router)
 
     // ui
     const toggleSidebarVisibility = () => {
       $store.commit('toggleSidebarVisibility')
     }
-    const theme = computed(() => $store.getters.theme)
-    const toggleTheme = (theme) => {
-      $store.commit('toggleTheme', theme)
-    }
-    
-    return { toggleSidebarVisibility, isLoggedIn, logOut, theme, toggleTheme, name }
+
+    // TODO handle theme switcher 
+    // const theme = computed(() => $store.getters.theme)
+    // const = (theme) => {
+    //   $store.commit('toggleTheme', theme)
+    // }
+    return { isLoggedIn, logOut, userName, toggleSidebarVisibility }
   }
 })
 </script>
-
 <style lang="scss">
-@import '../sass/_navbar.scss';
+@import '../sass/components/_navbar.scss';
 </style>

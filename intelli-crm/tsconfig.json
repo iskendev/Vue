@@ -30,7 +30,7 @@
     "src/**/*.tsx",
     "src/**/*.vue",
     "tests/**/*.ts",
-    "tests/**/*.tsx", "src/store/modules/trello.js", "src/main.ts"
+    "tests/**/*.tsx", "src/store/modules/trello.js", "src/main.ts", "src/composable/components/navbar.js", "src/composable/use-store.js"
   ],
   "exclude": [
     "node_modules"

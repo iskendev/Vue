@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import ui from './modules/ui'
-import trello from './modules/trello'
+import trello from './modules/task-planner'
 import auth from './modules/auth'
 
 Vue.use(Vuex)

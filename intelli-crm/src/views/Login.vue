@@ -21,44 +21,17 @@
         span(v-else @click='checkIsRegistered("reg")') or Sign In
 </template>
 
-<script lang='ts'>
-import { defineComponent, ref, computed } from '@vue/composition-api'
-
-export default defineComponent ({
+<script>
+import { authHandler } from '../composable/views/auth'
+export default ({
   name: 'Login',
   setup(_, { root: { $store, $router } }) {
-    const email = ref('')
-    const password = ref('')
-    const name = ref('')
-    const isRegistered = ref(true)
-    const signIn = async () => {
-      if (isRegistered.value) {
-        try {
-          await $store.dispatch('signIn', {
-            email: email.value, 
-            password: password.value 
-          })
-          $router.push('/')
-        } catch (e) {}
-      } else {
-        try {
-          await $store.dispatch('register', { 
-            name: name.value, 
-            email: email.value, 
-            password: password.value 
-          })
-          $router.push('/')
-        } catch (e) {}
-      }
-    }
-    const checkIsRegistered = (type: string) => {
-      type === 'sign' ? isRegistered.value = false : isRegistered.value = true      
-    }
+    const { name, email, password, signIn, isRegistered, checkIsRegistered } = authHandler($store, $router)
     return { name, email, password, signIn, isRegistered, checkIsRegistered }
   }
 })
 </script>
 
 <style lang="scss">
-@import '../sass/view/_login.scss';
+@import '../sass/views/_login.scss';
 </style>

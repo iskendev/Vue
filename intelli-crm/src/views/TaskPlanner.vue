@@ -31,9 +31,8 @@
 </template>
 
 <script> 
-import { useStore } from '../composable/use-store'
 import TaskModal from '../components/TaskModal.vue'
-import { tasksHandler, backgroundHandler, draggableHandler } from '../composable/view/task-planner.js'
+import { tasksHandler, backgroundHandler, draggableHandler } from '../composable/views/task-planner.js'
 const draggable = require('vuedraggable')
 
 export default ({
@@ -51,5 +50,5 @@ export default ({
 </script>
 
 <style lang="scss">
-@import '../sass/view/_task-planner.scss';
+@import '../sass/views/_task-planner.scss';
 </style>

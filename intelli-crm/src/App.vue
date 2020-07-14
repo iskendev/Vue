@@ -9,7 +9,7 @@
 <script>
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
-import { provideStore } from './composable/use-store'
+import { provideStore } from './composable/use-store.js'
 import { onMounted, computed, ref } from '@vue/composition-api'
 import firebase  from 'firebase/app'
 
@@ -39,5 +39,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import './sass/_app.scss';
+@import './sass/app.scss';
 </style>
