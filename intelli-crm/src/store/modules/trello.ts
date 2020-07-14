@@ -1,5 +1,5 @@
-import { uuid } from '../../utils/trello'
-import { localStorageSaver } from "../../utils/trello"
+import { uuid } from '../../utils/uuid'
+import { localStorageSaver } from "../../utils/uuid"
 
 let columns = localStorage.getItem('columns') ? 
   localStorage.getItem('columns') : [ {

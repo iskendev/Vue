@@ -109,36 +109,38 @@
         color: white;
       }
 
-      ul li {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background-color: white;
-        margin: 10px 0;
-        padding: 8px 5px;
-        border-radius: 5px;
-        font-size: 1.4rem;
-        word-wrap: break-word;
-        cursor: pointer;
-
-        span {
-          width: 190px;
-        }
-
-        input {
-          border: 0;
-          outline: none;
+      ul {
+        li {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          background-color: white;
+          margin: 10px 0;
+          padding: 8px 5px;
+          border-radius: 5px;
           font-size: 1.4rem;
-          font-family: 'Open Sans', sans-serif;
-          width: 190px;
-        }
+          word-wrap: break-word;
+          cursor: pointer;
 
-        .fa-exclamation {
-          margin-right: 8px;
-        }
+          span {
+            width: 190px;
+          }
 
-        .fa-pen {
-          margin-right: 8px
+          input {
+            border: 0;
+            outline: none;
+            font-size: 1.4rem;
+            font-family: 'Open Sans', sans-serif;
+            width: 190px;
+          }
+
+          .fa-exclamation {
+            margin-right: 8px;
+          }
+
+          .fa-pen {
+            margin-right: 8px
+          }
         }
       }
     }

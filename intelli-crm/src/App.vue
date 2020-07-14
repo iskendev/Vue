@@ -9,7 +9,7 @@
 <script>
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
-import { provideStore, useStore } from './composable/use-store'
+import { provideStore } from './composable/use-store'
 import { onMounted, computed, ref } from '@vue/composition-api'
 import firebase  from 'firebase/app'
 
