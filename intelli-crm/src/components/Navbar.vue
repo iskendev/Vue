@@ -15,22 +15,14 @@
 
 <script>
 import { authHandler } from '../composable/views/auth'
+import { navbarHandlers } from '../composable/components/navbar'
 export default ({
   name: 'Navbar',
   setup(_, { root: { $store, $router } }) {
     const { isLoggedIn, logOut, userName } = authHandler($store, $router)
-
-    // ui
-    const toggleSidebarVisibility = () => {
-      $store.commit('toggleSidebarVisibility')
-    }
-
-    // TODO handle theme switcher 
-    // const theme = computed(() => $store.getters.theme)
-    // const = (theme) => {
-    //   $store.commit('toggleTheme', theme)
-    // }
-    return { isLoggedIn, logOut, userName, toggleSidebarVisibility }
+    const { toggleSidebarVisibility, theme, toggleTheme } = navbarHandlers($store)
+    
+    return { isLoggedIn, logOut, userName, toggleSidebarVisibility, theme, toggleTheme }
   }
 })
 </script>
