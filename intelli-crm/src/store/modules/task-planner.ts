@@ -25,7 +25,14 @@ const trello = {
       state.boards.splice(i, 1)
     },
     addTask(state: any, payload: any) {
-      state.boards[payload.index].tasks.push(payload.task)
+      if (state.boards[payload.index].tasks) {
+        state.boards[payload.index].tasks.push(payload.task)  
+      } else {
+        state.boards[payload.index].tasks = []
+        state.boards[payload.index].tasks.push(payload.task)
+      }
+      console.log(payload);
+      console.log(state.boards);
     },
     deleteTask(state: any, payload: any) {
       state.boards[payload.index].tasks = 
@@ -47,7 +54,12 @@ const trello = {
       try {
         const uid = await dispatch('getUid')
         let boards = (await firebase.database().ref(`/users/${uid}/boards`).once('value')).val()
-        boards = Object.keys(boards).map(key => ({ ...boards[key], id: key })) 
+        boards = Object.keys(boards).map(key => ({ ...boards[key], id: key }))
+        boards.map((board: any) => {
+          if (board.tasks){
+            board.tasks =  Object.keys(board.tasks).map(key => ({ ...board.tasks[key], id: key }))
+          }
+        })
         commit('setBoards', boards)
       } catch (e) { commit('errorHandler', e) }
     },
@@ -70,9 +82,19 @@ const trello = {
       } catch (e) { commit('errorHandler', e) }
     },
     async deleteBoard({dispatch, commit}: any, {index, id}: any) {
-      commit('deleteBoard', index)
-      const uid = await dispatch('getUid')
-      await firebase.database().ref(`/users/${uid}/boards`).child(id).remove()
+      try {
+        commit('deleteBoard', index)
+        const uid = await dispatch('getUid')
+        await firebase.database().ref(`/users/${uid}/boards`).child(id).remove()
+      } catch (e) { commit('errorHandler', e) }
+      
+    },
+    async addTask({dispatch, commit, state}:any, {task, index, id}: any) {
+      try {
+        commit('addTask', { index, task })
+        const uid = await dispatch('getUid')
+        await firebase.database().ref(`/users/${uid}/boards/${id}/tasks`).push({ name: task.name, isPrioritized: task.isPrioritized })
+      } catch (e) { commit('errorHandler', e) }
     }
   }
 }

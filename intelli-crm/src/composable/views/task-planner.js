@@ -38,15 +38,18 @@ export function tasksHandler(store) {
     } catch (e) {}
   }
   // add task
-  const addTask = (e, index) => {
+  const addTask = async (e, index, id) => {
+    console.log(e, index, id  );
     let task = {
       name: e.target.value,
       id: uuid(),
       isPrioritized: false,
     }
     if (e.target.value) {
-      store.commit('addTask', { task, index })
-      e.target.value = ''
+      try {
+        await store.dispatch('addTask', { task, index, id })
+        e.target.value = ''
+      } catch (e) {}
     }
   }
   // delete task
