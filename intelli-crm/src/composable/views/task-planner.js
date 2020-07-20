@@ -1,5 +1,12 @@
-import { ref, computed } from '@vue/composition-api'
+import { ref, computed, onMounted } from '@vue/composition-api'
 import { uuid } from '../../utils/uuid'
+
+// fetch boards
+export function fetchBoards(store) {
+  onMounted(async () => {
+    await store.dispatch('fetchBoards')
+  })
+}
 
 // tasks handler -----------------------------------------
 export function tasksHandler(store) {
@@ -18,12 +25,17 @@ export function tasksHandler(store) {
   const changeBoardTitleFunc = (index) => {
     store.commit('changeBoardTitle', index)
   }
-  const DonechangeBoardTitleFunc = (index) => {
-    store.commit('DonechangeBoardTitle', index)
+  const DonechangeBoardTitleFunc = async (index, id) => {
+    try {
+      store.commit('DonechangeBoardTitle', index)
+      await store.dispatch('DonechangeBoardTitle', {index, id})
+    } catch (e) {}
   }
   // delete board
-  const deleteBoard = (index) => {
-    store.commit('deleteBoard', index)
+  const deleteBoard = async (index, id) => {
+    try {
+      await store.dispatch('deleteBoard', {index, id})
+    } catch (e) {}
   }
   // add task
   const addTask = (e, index) => {
@@ -54,12 +66,15 @@ export function tasksHandler(store) {
     editableTask.value.name = name
     showModal.value = true 
   }
-  const editTask = () => {
+  const editTask = async () => {
     if (modalHeader.value === 'board') {
       if (editableTask.value.name === '') {
         return false
       }
-      store.commit('addBoard', editableTask.value.name)
+      try {
+        const category = await store.dispatch('addBoard', editableTask.value.name)
+        console.log(category);
+      } catch (e) {}
     } else {
       store.commit('editTask', editableTask.value)
       editableTask.value = {}
@@ -102,7 +117,7 @@ export function backgroundHandler() {
 export function draggableHandler(store) {
   let controlOnStart = ref(true)
   let columns = computed({
-    get: () => store.getters.columns,
+    get: () => store.getters.boards,
     set: (value) => store.commit('updateColumns', value)
   })
   let dragOptions = computed(() => ({

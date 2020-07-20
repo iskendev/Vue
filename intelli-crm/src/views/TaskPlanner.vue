@@ -15,11 +15,11 @@
         div.task-planner__list--item-edit
           div.edit-board-title
             span(v-if='!column.isTitleChanging') {{ column.name }}
-            input.edit-board-title__input(v-else v-model='column.name' @keyup.enter='DonechangeBoardTitleFunc(index)')
+            input.edit-board-title__input(v-else v-model='column.name' @keyup.enter='DonechangeBoardTitleFunc(index, column.id)')
           span
             i.fas.fa-pencil-alt(v-if="!column.isTitleChanging" @click='changeBoardTitleFunc(index)')
-            i.fas.fa-check(v-else @click='DonechangeBoardTitleFunc(index)')
-            i.far.fa-trash-alt(@click='deleteBoard(index)')
+            i.fas.fa-check(v-else @click='DonechangeBoardTitleFunc(index, column.id)')
+            i.far.fa-trash-alt(@click='deleteBoard(index, column.id)')
         draggable(v-model="column.tasks" v-bind='dragOptions'  @start="start")
           li(v-for='(task, i) in column.tasks' :key='i' :class='{prioritized_task: task.isPrioritized}')
             span {{ task.name }}
@@ -32,7 +32,7 @@
 
 <script> 
 import TaskModal from '../components/TaskModal.vue'
-import { tasksHandler, backgroundHandler, draggableHandler } from '../composable/views/task-planner.js'
+import { fetchBoards, tasksHandler, backgroundHandler, draggableHandler } from '../composable/views/task-planner.js'
 const draggable = require('vuedraggable')
 
 export default ({
@@ -41,9 +41,12 @@ export default ({
     draggable, TaskModal
   },
   setup(_, { root: { $store } }) {
-    return { ...tasksHandler($store), 
-    ...draggableHandler($store), 
-    ...backgroundHandler() 
+    fetchBoards($store)
+    return {
+      ...tasksHandler($store), 
+      ...draggableHandler($store), 
+      ...backgroundHandler(),
+      fetchBoards
     }
   },
 })
