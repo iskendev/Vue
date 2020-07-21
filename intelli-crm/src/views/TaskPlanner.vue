@@ -25,8 +25,8 @@
             span {{ task.name }}
             div
               i.fas.fa-pen(@click='openModal(index, i, task.name)')
-              i.fas.fa-exclamation(@click='prioritizeTask(index, i)')
-              i.far.fa-times-circle(@click='deleteTask(index, task.id)')
+              i.fas.fa-exclamation(@click='prioritizeTask(index, i, column.id, task.id)')
+              i.far.fa-times-circle(@click='deleteTask(index, column.id, task.id)')
           input.task-planner__list--item-add(placeholder='+ Add another card' @keyup.enter='addTask($event, index, column.id)')
 </template>
 

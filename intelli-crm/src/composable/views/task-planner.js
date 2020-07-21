@@ -41,24 +41,25 @@ export function tasksHandler(store) {
   const addTask = async (e, index, id) => {
     let task = {
       name: e.target.value,
-      id: uuid(),
+      id: '',
       isPrioritized: false
     }
     if (e.target.value) {
       try {
-        // store.commit('addTask', { task, index })
         await store.dispatch('addTask', { task, index, id })
         e.target.value = ''
       } catch (e) {}
     }
   }
   // delete task
-  const deleteTask = (index, id) => {
-    store.commit('deleteTask', { index, id })
+  const deleteTask = async (index, columnID,  taskID) => {
+    try {
+      store.dispatch('deleteTask', { index, columnID,  taskID })
+    } catch (e) {}
   }
   // prioritize task
-  const prioritizeTask = (index, i) => {
-    store.commit('prioritizeTask', { index, i })
+  const prioritizeTask = (index, i, columnID,  taskID) => {
+    store.dispatch('prioritizeTask', { index, i, columnID,  taskID })
   }
   // edit task
   // let editableTask = ref({ index: null, i: null, name: '' })
@@ -75,8 +76,7 @@ export function tasksHandler(store) {
         return false
       }
       try {
-        const category = await store.dispatch('addBoard', editableTask.value.name)
-        console.log(category);
+        await store.dispatch('addBoard', editableTask.value.name)
       } catch (e) {}
     } else {
       store.commit('editTask', editableTask.value)
