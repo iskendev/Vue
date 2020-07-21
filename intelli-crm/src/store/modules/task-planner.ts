@@ -13,6 +13,8 @@ const trello = {
     },
     setBoards(state: any, boards: any) {
       state.boards = boards
+      console.log(state.boards);
+      
     },
     DonechangeBoardTitle(state: any, index: any) {
       state.boards[index].isTitleChanging = false
@@ -25,15 +27,8 @@ const trello = {
       state.boards.splice(i, 1)
     },
     addTask(state: any, payload: any) {
-      if (state.boards[payload.index].tasks) {
-        state.boards[payload.index].tasks.push(payload.task)  
-      } else {
-        state.boards[payload.index].tasks = []
-        state.boards[payload.index].tasks.push(payload.task)
-      }
-      console.log(payload);
-      console.log(state.boards);
-    },
+      state.boards[payload.index].tasks.push(payload.task)  
+    }, 
     deleteTask(state: any, payload: any) {
       state.boards[payload.index].tasks = 
         state.boards[payload.index].tasks.filter((task: any) => task.id !== payload.id)
@@ -56,8 +51,10 @@ const trello = {
         let boards = (await firebase.database().ref(`/users/${uid}/boards`).once('value')).val()
         boards = Object.keys(boards).map(key => ({ ...boards[key], id: key }))
         boards.map((board: any) => {
-          if (board.tasks){
+          if (board.tasks) {
             board.tasks =  Object.keys(board.tasks).map(key => ({ ...board.tasks[key], id: key }))
+          } else {
+            board.tasks = []
           }
         })
         commit('setBoards', boards)
@@ -66,12 +63,11 @@ const trello = {
     async addBoard({commit, dispatch}:any, name: any) {
       try {
         const uid = await dispatch('getUid')
-        const board = await firebase.database().ref(`/users/${uid}/boards`).push({ name: name, isTitleChanging: false, tasks: [] })
+        const board = await firebase.database().ref(`/users/${uid}/boards`).push({ name: name, isTitleChanging: false })
         commit('addBoard', {
           id: board.key,
           name: name,
-          isTitleChanging: false, 
-          tasks: [] 
+          isTitleChanging: false 
         })
       } catch(e) { commit('errorHandler', e) }
     },
@@ -91,9 +87,9 @@ const trello = {
     },
     async addTask({dispatch, commit, state}:any, {task, index, id}: any) {
       try {
-        commit('addTask', { index, task })
         const uid = await dispatch('getUid')
         await firebase.database().ref(`/users/${uid}/boards/${id}/tasks`).push({ name: task.name, isPrioritized: task.isPrioritized })
+        commit('addTask', { index, task })
       } catch (e) { commit('errorHandler', e) }
     }
   }
