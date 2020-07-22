@@ -1,68 +1,17 @@
-import { ref, computed, onMounted } from '@vue/composition-api'
+import { ref, onMounted, computed } from '@vue/composition-api'
 import { uuid } from '../../utils/uuid'
 
-// fetch boards ---------------------------------------
-export function fetchBoards(store) {
-  onMounted(async () => {
-    await store.dispatch('fetchBoards')
-  })
-}
-
-// tasks handler --------------------------------------
-export function tasksHandler(store) {
-  // add board
+export default function taskPlannerHandlers(store) {
   let showModal = ref(false)
   let modalHeader = ref('')
-  let editableTask = ref({ index: null, i: null, columnID: null, task: null })
+  let editableTask = ref({ index: null, i: null, columnID: null, task: { name: '', isPrioritized: false } })
+  let columns = computed({
+    get: () => store.getters.boards,
+    set: (value) => store.dispatch('updateColumns', value)
+  })
 
-  const addBoard = () => {
-    modalHeader.value = 'board'
-    editableTask.value.task.name = ''
-    showModal.value = true
-  }
-  // change board title
-  const changeBoardTitle = ref(false)
-  const changeBoardTitleFunc = (index) => {
-    store.commit('changeBoardTitle', index)
-  }
-  const DonechangeBoardTitleFunc = async (index, id) => {
-    try {
-      store.commit('DonechangeBoardTitle', index)
-      await store.dispatch('DonechangeBoardTitle', {index, id})
-    } catch (e) {}
-  }
-  // delete board
-  const deleteBoard = async (index, id) => {
-    try {
-      await store.dispatch('deleteBoard', {index, id})
-    } catch (e) {}
-  }
-  // add task
-  const addTask = async (e, index, id) => {
-    let task = {
-      name: e.target.value,
-      id: '',
-      isPrioritized: false
-    }
-    if (e.target.value) {
-      try {
-        await store.dispatch('addTask', { task, index, id })
-        e.target.value = ''
-      } catch (e) {}
-    }
-  }
-  // delete task
-  const deleteTask = async (index, columnID,  taskID) => {
-    try {
-      store.dispatch('deleteTask', { index, columnID,  taskID })
-    } catch (e) {}
-  }
-  // prioritize task
-  const prioritizeTask = (index, i, columnID,  taskID) => {
-    store.dispatch('prioritizeTask', { index, i, columnID,  taskID })
-  }
-  // edit task
-  const openModal = (index, i, columnID, task) => {
+  // common handlers -----------------------------------
+  const openModal_editTask = (index, i, columnID, task) => {
     modalHeader.value = 'task'
     editableTask.value.index = index
     editableTask.value.i = i
@@ -70,7 +19,14 @@ export function tasksHandler(store) {
     editableTask.value.task = task
     showModal.value = true
   }
-  const editTask = async () => {
+
+  const openModal_addBoard = () => {
+    modalHeader.value = 'board'
+    editableTask.value.task.name = ''
+    showModal.value = true
+  }
+
+  const addBoard_editTask = async () => {
     if (modalHeader.value === 'board') {
       if (editableTask.value.task.name === '') {
         return false
@@ -81,70 +37,128 @@ export function tasksHandler(store) {
     } else {
       try {
         store.dispatch('editTask', editableTask.value)
-        editableTask.value = {}
+        editableTask.value = { index: null, i: null, columnID: null, task: { name: '', isPrioritized: false } }
       } catch (e) {}
     }
     showModal.value = false
   }
 
+  // boards handler -------------------------------------
+  function boardsHandler() {
+    const changeBoardTitle = ref(false)
+
+    // fetch boards
+    const fetchBoards = () => {
+      onMounted(async () => {
+        await store.dispatch('fetchBoards')
+      })
+    }
+
+    // change board title
+    const changeBoardTitleFunc = (index) => {
+      store.commit('changeBoardTitle', index)
+    }
+    const DonechangeBoardTitleFunc = async (index, id) => {
+      try {
+        store.commit('DonechangeBoardTitle', index)
+        await store.dispatch('DonechangeBoardTitle', {index, id})
+      } catch (e) {}
+    }
+
+    // delete board
+    const deleteBoard = async (index, id) => {
+      try {
+        await store.dispatch('deleteBoard', {index, id})
+      } catch (e) {}
+    }
+
+    return {
+      fetchBoards,
+      deleteBoard,
+      changeBoardTitle,
+      DonechangeBoardTitleFunc,
+      changeBoardTitleFunc
+    }
+  }
+
+  // tasks handler --------------------------------------
+  function tasksHandler() {
+    // add task
+    const addTask = async (e, index, id) => {
+      let task = {
+        name: e.target.value,
+        id: '',
+        isPrioritized: false
+      }
+      if (e.target.value) {
+        try {
+          await store.dispatch('addTask', { task, index, id })
+          e.target.value = ''
+        } catch (e) {}
+      }
+    }
+
+    // delete task
+    const deleteTask = async (index, columnID,  taskID) => {
+      try {
+        store.dispatch('deleteTask', { index, columnID,  taskID })
+      } catch (e) {}
+    }
+
+    // prioritize task
+    const prioritizeTask = (index, i, columnID,  taskID) => {
+      store.dispatch('prioritizeTask', { index, i, columnID,  taskID })
+    }
+    return {
+      addTask,
+      deleteTask,
+      prioritizeTask
+    }
+  }
+
+  // background handler ----------------------------------
+  function backgroundHandler() {
+    let image = ref('none')
+    const backgroundOptions = ref([
+      { num: 0, path: 'none' },
+      { num: 1, path: 'url(' + require('@/assets/1.jpg') + ')' },
+      { num: 2, path: 'url(' + require('@/assets/2.jpg') + ')' },
+      { num: 3, path: 'url(' + require('@/assets/3.jpg') + ')' },
+      { num: 4, path: 'url(' + require('@/assets/4.jpg') + ')' },
+      { num: 5, path: 'url(' + require('@/assets/5.jpg') + ')' },
+    ])
+    return { backgroundOptions, image }
+  }
+
+  // drag & drop handler ----------------------------------
+  function draggableHandler() {
+    let controlOnStart = ref(true)
+    const clone = ({ name }) => {
+      return { name, id: uuid() };
+    }
+    const pullFunction = () => {
+      return controlOnStart ? "clone" : true;
+    }
+    const start = ({ originalEvent }) => {
+      controlOnStart = originalEvent.ctrlKey;
+    }
+    return { controlOnStart, clone, start, pullFunction }
+  }
+
   return {
-    addBoard,
-    deleteBoard,
-    addTask,
-    deleteTask,
-    openModal,
-    prioritizeTask,
     showModal,
-    editableTask,
-    editTask,
     modalHeader,
-    changeBoardTitle,
-    DonechangeBoardTitleFunc,
-    changeBoardTitleFunc
+    editableTask,
+    columns,
+    openModal_addBoard,
+    openModal_editTask,
+    addBoard_editTask,
+    ...boardsHandler(),
+    ...tasksHandler(),
+    ...backgroundHandler(),
+    ...draggableHandler()
   }
 }
 
-// background handler ----------------------------------
-export function backgroundHandler() {
-  let image = ref('none')
-  const backgroundOptions = ref([
-    { num: 0, path: 'none' },
-    { num: 1, path: 'url(' + require('@/assets/1.jpg') + ')' },
-    { num: 2, path: 'url(' + require('@/assets/2.jpg') + ')' },
-    { num: 3, path: 'url(' + require('@/assets/3.jpg') + ')' },
-    { num: 4, path: 'url(' + require('@/assets/4.jpg') + ')' },
-    { num: 5, path: 'url(' + require('@/assets/5.jpg') + ')' },
-  ])
-  return { backgroundOptions, image }
-}
 
-// drag & drop handler ----------------------------------
-export function draggableHandler(store) {
-  let controlOnStart = ref(true)
-  let columns = computed({
-    get: () => store.getters.boards,
-    set: (value) => store.commit('updateColumns', value)
-  })
-  let dragOptions = computed(() => ({
-    tag: "ul",
-    animation: 300,
-    group: { name: 'columns', pull: pullFunction }
-  }))
 
-  let dragOptionsBoards = computed(() => ({
-    tag: "ul",
-    animation: 300,
-    group: { name: 'boards', pull: pullFunction }
-  }))
-
-  const clone = ({ name }) => {
-    return { name, id: uuid() };
-  }
-  const pullFunction = () => {
-    return controlOnStart ? "clone" : true;
-  }
-  const start = ({ originalEvent }) => {
-    controlOnStart = originalEvent.ctrlKey;
-  }
-  return { columns, controlOnStart, clone, pullFunction, start, dragOptions, dragOptionsBoards }
-}

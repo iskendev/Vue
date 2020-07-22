@@ -23,16 +23,16 @@ export default {
     const isLoggedIn = computed(() => $store.getters.isLoggedIn)
     const userInfo = computed(() => $store.getters.userInfo)
 
-    onMounted(async () => {
-      const user = firebase.auth().currentUser
-      if (user) {
-        $store.commit('setUserAuth', 'in')
-        await $store.dispatch('getUserInfo')
-      } else {
-        $store.commit('setUserAuth', 'out')
-        $router.push('/login').catch(() => {})
-      }
-    })
+    // onMounted(async () => {
+    //   const user = firebase.auth().currentUser
+    //   if (user) {
+    //     $store.commit('setUserAuth', 'in')
+    //     await $store.dispatch('getUserInfo')
+    //   } else {
+    //     $store.commit('setUserAuth', 'out')
+    //     $router.push('/login').catch(() => {})
+    //   }
+    // })
     return { isLoggedIn, userInfo }
   }
 }

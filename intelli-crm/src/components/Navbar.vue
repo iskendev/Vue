@@ -1,6 +1,6 @@
 <template lang='pug'>
   div#navbar.navbar(:class='{ light: theme === "light" }')
-    h1.navbar-title(@click='toggleSidebarVisibility') intelli-crm 
+    h1.navbar-title(@click='toggleSidebarVisibility') intelli-crm
       i.fas.fa-power-off
     div.navbar-items(v-if='isLoggedIn')
       ul
@@ -21,7 +21,7 @@ export default ({
   setup(_, { root: { $store, $router } }) {
     const { isLoggedIn, logOut, userName } = authHandler($store, $router)
     const { toggleSidebarVisibility, theme, toggleTheme } = navbarHandlers($store)
-    
+
     return { isLoggedIn, logOut, userName, toggleSidebarVisibility, theme, toggleTheme }
   }
 })

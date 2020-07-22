@@ -35,7 +35,7 @@ const trello = {
     },
     prioritizeTask(state: any, payload: any) {
       state.boards[payload.index].tasks[payload.i].isPrioritized =
-        !state.boards[payload.index].tasks[payload.i].isPrioritized;
+        !state.boards[payload.index].tasks[payload.i].isPrioritized
     },
     updateColumns(state: any, payload: any) {
       state.boards = payload
@@ -75,7 +75,10 @@ const trello = {
     async DonechangeBoardTitle({dispatch, commit, state}: any, {index, id}: any) {
       try {
         const uid = await dispatch('getUid')
-        await firebase.database().ref(`/users/${uid}/boards`).child(id).update({name: state.boards[index].name})
+        await firebase.database()
+          .ref(`/users/${uid}/boards`)
+          .child(id)
+          .update({name: state.boards[index].name})
       } catch (e) { commit('errorHandler', e) }
     },
     async deleteBoard({dispatch, commit}: any, {index, id}: any) {
@@ -86,6 +89,29 @@ const trello = {
           .child(id)
           .remove()
           .then(() => { commit('deleteBoard', index) })
+      } catch (e) { commit('errorHandler', e) }
+    },
+    async updateColumns({dispatch, commit}:any, payload: any) {
+      try {
+        const uid = await dispatch('getUid')
+        await firebase.database()
+          .ref(`/users/${uid}/boards`)
+          .set(payload)
+          .then(() => {
+            commit('updateColumns', payload)
+          })
+        // await firebase.database()
+        //   .ref(`/users/${uid}/boards`)
+        //   .remove()
+        //   .then(async () => {
+        //     await firebase.database()
+        //       .ref(`/users/${uid}/boards`)
+        //       .set(payload)
+        //       .then(() => {
+        //         commit('updateColumns', payload)
+        //       })
+        //     // commit('updateColumns', payload)
+        //   })
       } catch (e) { commit('errorHandler', e) }
     },
     async addTask({dispatch, commit}:any, {task, index, id}: any) {
