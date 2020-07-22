@@ -25,16 +25,16 @@ const trello = {
     },
     addTask(state: any, payload: any) {
       state.boards[payload.index].tasks.push(payload.task)
-    }, 
+    },
     deleteTask(state: any, payload: any) {
-      state.boards[payload.index].tasks = 
+      state.boards[payload.index].tasks =
         state.boards[payload.index].tasks.filter((task: any) => task.id !== payload.taskID)
     },
     editTask(state: any, payload:any) {
-      state.boards[payload.index].tasks[payload.i].name = payload.name 
+      state.boards[payload.index].tasks[payload.i].name = payload.task.name
     },
     prioritizeTask(state: any, payload: any) {
-      state.boards[payload.index].tasks[payload.i].isPrioritized = 
+      state.boards[payload.index].tasks[payload.i].isPrioritized =
         !state.boards[payload.index].tasks[payload.i].isPrioritized;
     },
     updateColumns(state: any, payload: any) {
@@ -67,7 +67,7 @@ const trello = {
             commit('addBoard', {
               id: snapshot.key,
               name: name,
-              isTitleChanging: false 
+              isTitleChanging: false
             })
           })
       } catch(e) { commit('errorHandler', e) }
@@ -87,7 +87,6 @@ const trello = {
           .remove()
           .then(() => { commit('deleteBoard', index) })
       } catch (e) { commit('errorHandler', e) }
-      
     },
     async addTask({dispatch, commit}:any, {task, index, id}: any) {
       try {
@@ -99,6 +98,16 @@ const trello = {
             task.id = snapshot.key
             commit('addTask', { index, task })
           })
+      } catch (e) { commit('errorHandler', e) }
+    },
+    async editTask({dispatch, commit, state}:any, {index, i, columnID,  task}: any) {
+      try {
+        const uid = await dispatch('getUid')
+        await firebase.database()
+          .ref(`/users/${uid}/boards/${columnID}/tasks`)
+          .child(task.id)
+          .update({ name: task.name })
+          .then(() => { commit('editTask', { index, i, task }) })
       } catch (e) { commit('errorHandler', e) }
     },
     async deleteTask({dispatch, commit, state}:any, {index, columnID,  taskID}: any) {

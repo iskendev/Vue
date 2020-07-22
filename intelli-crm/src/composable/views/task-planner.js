@@ -1,23 +1,23 @@
 import { ref, computed, onMounted } from '@vue/composition-api'
 import { uuid } from '../../utils/uuid'
 
-// fetch boards
+// fetch boards ---------------------------------------
 export function fetchBoards(store) {
   onMounted(async () => {
     await store.dispatch('fetchBoards')
   })
 }
 
-// tasks handler -----------------------------------------
+// tasks handler --------------------------------------
 export function tasksHandler(store) {
   // add board
   let showModal = ref(false)
   let modalHeader = ref('')
-  let editableTask = ref({ index: null, i: null, name: '' })
+  let editableTask = ref({ index: null, i: null, columnID: null, task: null })
 
   const addBoard = () => {
     modalHeader.value = 'board'
-    editableTask.value.name = ''
+    editableTask.value.task.name = ''
     showModal.value = true
   }
   // change board title
@@ -62,38 +62,40 @@ export function tasksHandler(store) {
     store.dispatch('prioritizeTask', { index, i, columnID,  taskID })
   }
   // edit task
-  // let editableTask = ref({ index: null, i: null, name: '' })
-  const openModal = (index, i, name) => {
+  const openModal = (index, i, columnID, task) => {
     modalHeader.value = 'task'
     editableTask.value.index = index
     editableTask.value.i = i
-    editableTask.value.name = name
-    showModal.value = true 
+    editableTask.value.columnID = columnID
+    editableTask.value.task = task
+    showModal.value = true
   }
   const editTask = async () => {
     if (modalHeader.value === 'board') {
-      if (editableTask.value.name === '') {
+      if (editableTask.value.task.name === '') {
         return false
       }
       try {
-        await store.dispatch('addBoard', editableTask.value.name)
+        await store.dispatch('addBoard', editableTask.value.task.name)
       } catch (e) {}
     } else {
-      store.commit('editTask', editableTask.value)
-      editableTask.value = {}
+      try {
+        store.dispatch('editTask', editableTask.value)
+        editableTask.value = {}
+      } catch (e) {}
     }
     showModal.value = false
   }
-  
-  return { 
+
+  return {
     addBoard,
     deleteBoard,
-    addTask, 
-    deleteTask, 
-    openModal, 
-    prioritizeTask, 
-    showModal, 
-    editableTask, 
+    addTask,
+    deleteTask,
+    openModal,
+    prioritizeTask,
+    showModal,
+    editableTask,
     editTask,
     modalHeader,
     changeBoardTitle,
