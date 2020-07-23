@@ -13,9 +13,6 @@ const trello = {
     },
     setBoards(state: any, boards: any) {
       state.boards = boards
-      console.log(state.boards);
-      console.log(boards);
-
     },
     DonechangeBoardTitle(state: any, index: any) {
       state.boards[index].isTitleChanging = false
@@ -40,7 +37,7 @@ const trello = {
       state.boards[payload.index].tasks[payload.i].isPrioritized =
         !state.boards[payload.index].tasks[payload.i].isPrioritized
     },
-    updateColumns(state: any, payload: any) {
+    updateBoards(state: any, payload: any) {
       state.boards = payload
     }
   },
@@ -94,14 +91,14 @@ const trello = {
           .then(() => { commit('deleteBoard', index) })
       } catch (e) { commit('errorHandler', e) }
     },
-    async updateColumns({dispatch, commit}:any, payload: any) {
+    async updateBoards({dispatch, commit}:any, payload: any) {
       try {
         const uid = await dispatch('getUid')
         await firebase.database()
           .ref(`/users/${uid}/boards`)
           .set(payload)
           .then(() => {
-            commit('updateColumns', payload)
+            commit('updateBoards', payload)
           })
       } catch (e) { commit('errorHandler', e) }
     },

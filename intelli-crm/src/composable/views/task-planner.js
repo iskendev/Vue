@@ -5,9 +5,9 @@ export default function taskPlannerHandlers(store) {
   let showModal = ref(false)
   let modalHeader = ref('')
   let editableTask = ref({ index: null, i: null, columnID: null, task: { name: '', isPrioritized: false } })
-  let columns = computed({
+  let boards = computed({
     get: () => store.getters.boards,
-    set: (value) => store.dispatch('updateColumns', value)
+    set: (value) => store.dispatch('updateBoards', value)
   })
 
   // common handlers -----------------------------------
@@ -100,7 +100,7 @@ export default function taskPlannerHandlers(store) {
 
     // rearrange tasks
     const reArrangeTasks = () => {
-      store.dispatch('updateColumns', columns.value)
+      store.dispatch('updateBoards', boards.value)
     }
 
     // delete task
@@ -124,7 +124,10 @@ export default function taskPlannerHandlers(store) {
 
   // background handler ----------------------------------
   function backgroundHandler() {
-    let image = ref('none')
+    let url = ref('none')
+    const changeBG = (path) => {
+      url.value = path
+    }
     const backgroundOptions = ref([
       { num: 0, path: 'none' },
       { num: 1, path: 'url(' + require('@/assets/1.jpg') + ')' },
@@ -133,7 +136,7 @@ export default function taskPlannerHandlers(store) {
       { num: 4, path: 'url(' + require('@/assets/4.jpg') + ')' },
       { num: 5, path: 'url(' + require('@/assets/5.jpg') + ')' },
     ])
-    return { backgroundOptions, image }
+    return { backgroundOptions, url, changeBG }
   }
 
   // drag & drop handler ----------------------------------
@@ -155,7 +158,7 @@ export default function taskPlannerHandlers(store) {
     showModal,
     modalHeader,
     editableTask,
-    columns,
+    boards,
     openModal_addBoard,
     openModal_editTask,
     addBoard_editTask,

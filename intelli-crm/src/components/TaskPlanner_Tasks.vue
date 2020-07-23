@@ -8,30 +8,31 @@
     li(v-for='(task, i) in tasks' :key='i' :class='{prioritized_task: task.isPrioritized}')
       span {{ task.name }}
       div
-        i.fas.fa-pen(@click='openModal_editTask(columnIndex, i, columnID, task)')
-        i.fas.fa-exclamation(@click='prioritizeTask(columnIndex, i, columnID, task.id)')
-        i.far.fa-times-circle(@click='deleteTask(columnIndex, columnID, task.id)')
-    input.task-planner__list--item-add(placeholder='+ Add another card' @keyup.enter='addTask($event, columnIndex, columnID)')
+        i.fas.fa-pen(@click='openModal(boardIndex, i, boardID, task)')
+        i.fas.fa-exclamation(@click='prioritizeTask(boardIndex, i, boardID, task.id)')
+        i.far.fa-times-circle(@click='deleteTask(boardIndex, boardID, task.id)')
+    input.task-planner__list--item-add(placeholder='+ Add another card' @keyup.enter='addTask($event, boardIndex, boardID)')
 </template>
 
 <script>
   import taskPlannerHandlers from '../composable/views/task-planner'
   const draggable = require('vuedraggable')
+
   export default {
-    name: 'Tasks',
+    name: 'TaskPlanner_Tasks',
     props: {
-      columnID: {
-        required: true,
+      boardID: {
+        required: false,
         type: String,
         default: ''
       },
-      columnIndex: {
-        required: true,
+      boardIndex: {
+        required: false,
         type: Number,
         default: 0
       },
       tasks: {
-        required: true,
+        required: false,
         type: Array,
         default: null
       }
@@ -47,10 +48,15 @@
         deleteTask, prioritizeTask,
       } = taskPlannerHandlers($store)
 
+      const openModal = (boardIndex, i, boardID, task) => {
+        emit('openModal', { boardIndex, i, boardID, task })
+      }
+
       return {
         addTask,
-        reArrangeTasks,
+        openModal,
         deleteTask,
+        reArrangeTasks,
         prioritizeTask,
         openModal_editTask,
       }
