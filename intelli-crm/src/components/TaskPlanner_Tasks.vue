@@ -42,8 +42,6 @@
     },
     setup(props, { root: { $store }, emit }) {
       const {
-        columns,
-        openModal_editTask,
         addTask, reArrangeTasks,
         deleteTask, prioritizeTask,
       } = taskPlannerHandlers($store)
@@ -58,7 +56,6 @@
         deleteTask,
         reArrangeTasks,
         prioritizeTask,
-        openModal_editTask,
       }
     }
   }

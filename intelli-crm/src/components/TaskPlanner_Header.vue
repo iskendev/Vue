@@ -15,23 +15,19 @@
     name: 'TaskPlanner_Header',
     props: ['image'],
     setup(_, { emit }) {
-      const {
-        backgroundOptions,
-        openModal_addBoard,
-      } = taskPlannerHandlers()
+      const { backgroundOptions } = taskPlannerHandlers()
 
       const changeBG = (path) => {
         emit('changeBGFunc', path)
       }
       const openModal = () => {
-        emit('openModal')
+        emit('openBoardModal')
       }
 
       return {
         changeBG,
         openModal,
         backgroundOptions,
-        openModal_addBoard,
       }
     }
   }

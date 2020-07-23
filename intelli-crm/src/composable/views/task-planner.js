@@ -46,11 +46,14 @@ export default function taskPlannerHandlers(store) {
   // boards handler -------------------------------------
   function boardsHandler() {
     const changeBoardTitle = ref(false)
+    let loading = ref(true)
 
     // fetch boards
     const fetchBoards = () => {
+
       onMounted(async () => {
         await store.dispatch('fetchBoards')
+        loading.value = false
       })
     }
 
@@ -73,11 +76,12 @@ export default function taskPlannerHandlers(store) {
     }
 
     return {
+      loading,
       fetchBoards,
       deleteBoard,
       changeBoardTitle,
+      changeBoardTitleFunc,
       DonechangeBoardTitleFunc,
-      changeBoardTitleFunc
     }
   }
 

@@ -22,10 +22,10 @@ body {
   padding: 15px;
 
   .main {
-    display: flex;
+    display: grid;
+    grid-template-columns: 2fr 12fr;
 
     .view {
-      flex: 7;
       height: calc(100vh - 115px);
       padding: 0 15px;
       border-radius: 5px;

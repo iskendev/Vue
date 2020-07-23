@@ -1,37 +1,22 @@
-<template>
-  <div class="task-modal">
-    <transition name="modal">
-        <div class="modal-mask">
-          <div class="modal-wrapper">
-            <div class="modal-container">
-              <div class="modal-header">
-                <slot name="header">
+<template lang='pug'>
+  div.task-modal
+    transition(name='modal')
+        div.modal-mask
+          div.modal-wrapper
+            div.modal-container
+              div.modal-header
+                slot(name='header')
 
-                </slot>
-              </div>
+              div.modal-body
+                slot(name='body')
 
-              <div class="modal-body">
-                <slot name="body">
-                
-                </slot>
-              </div>
-
-              <div class="modal-footer">
-                <slot name="footer">
-                  <button class="modal-default-button" @click="$emit('close')">
-                    OK
-                  </button>
-                </slot>
-              </div>
-            </div>
-          </div>
-        </div>
-      </transition>
-  </div>
+              div.modal-footer
+                slot(name='footer')
+                  button.modal-default-button(@click="$emit('close')") OK
 </template>
 <script>
 export default {
-  name: 'TaskModal'
+  name: 'TaskPlanner_TaskModal'
 }
 </script>
 <style lang="scss">
