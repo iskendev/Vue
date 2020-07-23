@@ -98,6 +98,11 @@ export default function taskPlannerHandlers(store) {
       }
     }
 
+    // rearrange tasks
+    const reArrangeTasks = () => {
+      store.dispatch('updateColumns', columns.value)
+    }
+
     // delete task
     const deleteTask = async (index, columnID,  taskID) => {
       try {
@@ -111,6 +116,7 @@ export default function taskPlannerHandlers(store) {
     }
     return {
       addTask,
+      reArrangeTasks,
       deleteTask,
       prioritizeTask
     }

@@ -19,7 +19,7 @@
       color: white;
     }
 
-    .fa-power-off { font-size: 1.5rem }
+    .fa-power-off { margin-left: 5px; font-size: 1.5rem }
   }
 
   &-items {
@@ -33,7 +33,7 @@
         .tooltip {
           position: relative;
           display: inline-block;
-          
+
           &:hover .tooltiptext {
             visibility: visible;
           }

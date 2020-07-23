@@ -13,6 +13,9 @@ const trello = {
     },
     setBoards(state: any, boards: any) {
       state.boards = boards
+      console.log(state.boards);
+      console.log(boards);
+
     },
     DonechangeBoardTitle(state: any, index: any) {
       state.boards[index].isTitleChanging = false
@@ -100,18 +103,6 @@ const trello = {
           .then(() => {
             commit('updateColumns', payload)
           })
-        // await firebase.database()
-        //   .ref(`/users/${uid}/boards`)
-        //   .remove()
-        //   .then(async () => {
-        //     await firebase.database()
-        //       .ref(`/users/${uid}/boards`)
-        //       .set(payload)
-        //       .then(() => {
-        //         commit('updateColumns', payload)
-        //       })
-        //     // commit('updateColumns', payload)
-        //   })
       } catch (e) { commit('errorHandler', e) }
     },
     async addTask({dispatch, commit}:any, {task, index, id}: any) {
