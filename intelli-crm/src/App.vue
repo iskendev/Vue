@@ -22,7 +22,6 @@ export default {
     provideStore($store)
     const isLoggedIn = computed(() => $store.getters.isLoggedIn)
     const userInfo = computed(() => $store.getters.userInfo)
-    const loading = computed(() => $store.getters.loading)
     onMounted(async () => {
       const user = firebase.auth().currentUser
       if (user) {
@@ -33,7 +32,7 @@ export default {
         $router.push('/login').catch(() => {})
       }
     })
-    return { isLoggedIn, userInfo, loading }
+    return { isLoggedIn, userInfo }
   }
 }
 </script>

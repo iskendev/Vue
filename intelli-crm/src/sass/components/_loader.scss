@@ -5,3 +5,16 @@
   top: 50%;
   left: 50%;
 }
+
+.small-loader {
+  position: relative;
+  margin: 0 20px;
+
+  img {
+    position: absolute;
+    margin: 0 5px;
+    right: -27px;
+    top: -7px;
+    margin: 0 5px;
+  }
+}
