@@ -14,8 +14,6 @@ const trello = {
     },
     setBoards(state: any, boards: any) {
       state.boards = boards
-      console.log(boards);
-
     },
     DonechangeBoardTitle(state: any, index: any) {
       state.boards[index].isTitleChanging = false
@@ -47,10 +45,8 @@ const trello = {
   actions: {
     async fetchBoards({ commit, dispatch, rootState }: any) {
       try {
-        // commit('loadingON', null, { root: true })
-        // rootState.loading = true
         const uid = await dispatch('getUid')
-        let boards = (await firebase.database().ref(`/users/${uid}/boards`).once('value')).val()
+        let boards = (await firebase.database().ref(`/users/${uid}/boards`).once('value')).val() || []
         boards = Object.keys(boards).map(key => ({ ...boards[key], id: key }))
         boards.map((board: any) => {
           if (board.tasks) {
@@ -59,12 +55,7 @@ const trello = {
             board.tasks = []
           }
         })
-        // rootState.loading = true
         commit('setBoards', boards)
-        // rootState.loading = false
-        // commit('loadingON', null, { root: true })
-        // commit('setBoards', boards)
-        // commit('loadingOFF', null, { root: true })
       } catch (e) { commit('errorHandler', e) }
     },
     async addBoard({commit, dispatch}:any, name: any) {
