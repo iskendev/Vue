@@ -26,6 +26,7 @@ export default ({
     const { isLoggedIn, logOut, userName } = authHandler($store, $router)
     const { toggleSidebarVisibility, theme, toggleTheme } = navbarHandlers($store)
     let loading = ref(true)
+
     watch(userName, () => {
       if (userName)
         loading.value = false
@@ -35,7 +36,7 @@ export default ({
     let interval = ref(null)
 
     onMounted(() => {
-      setInterval(() => {
+      interval.value = setInterval(() => {
         date.value = new Date()
       }, 1000)
     })

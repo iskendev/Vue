@@ -14,12 +14,11 @@
 </template>
 
 <script>
+import { computed } from '@vue/composition-api'
 export default {
   name: 'Navbar',
-
-  computed: {
-    titles() {
-      return [
+  setup(_, {root: {$store}}) {
+    const titles = computed(() => [
         { title: 'Home', icon: 'home', path: '/' },
         { title: 'Time tracker', icon: 'clock', path: '/time-tracker'},
         { title: 'Todo', icon: 'pencil-alt', path: '/todo'},
@@ -30,14 +29,11 @@ export default {
         { title: 'Relaxer', icon: 'mug-hot', path: '/relaxer'},
         { title: 'Charts', icon: 'chart-bar', path: '/charts'},
         { title: 'Settings', icon: 'wrench', path: '/settings'},
-      ]
-    },
-    sidebarVisibility() {
-      return this.$store.getters.sidebarVisibility;
-    },
-    theme() {
-      return this.$store.getters.theme
-    }
+    ])
+    const sidebarVisibility = computed(() => $store.getters.sidebarVisibility)
+    const theme = computed(() => $store.getters.theme)
+
+    return { titles, sidebarVisibility, theme }
   }
 }
 </script>
