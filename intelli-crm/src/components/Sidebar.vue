@@ -1,12 +1,12 @@
 <template lang='pug'>
-  div.sidebar(v-if='sidebarVisibility')
+  div.sidebar(v-if='sidebarVisibility' :class='{ light: theme === "light" }')
     ul
-      router-link(v-for='(title, i) in titles' 
+      router-link(v-for='(title, i) in titles'
         :key='i'
         :to='title.path'
         v-slot="{ href, route, navigate, isActive, isExactActive }"
         exact)
-        li(@click="navigate" 
+        li(@click="navigate"
           :class="[isActive && 'router-link-active', isExactActive && 'router-link-exact-active']")
           a(:href="href")
             i(:class="`fas fa-${title.icon}`")
@@ -16,6 +16,7 @@
 <script>
 export default {
   name: 'Navbar',
+
   computed: {
     titles() {
       return [
@@ -33,6 +34,9 @@ export default {
     },
     sidebarVisibility() {
       return this.$store.getters.sidebarVisibility;
+    },
+    theme() {
+      return this.$store.getters.theme
     }
   }
 }

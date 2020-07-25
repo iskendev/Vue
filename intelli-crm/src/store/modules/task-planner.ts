@@ -1,7 +1,6 @@
 import firebase  from 'firebase/app'
 
 const trello = {
-  // namespaced: true,
   state: {
     boards: []
   },
@@ -68,7 +67,8 @@ const trello = {
             commit('addBoard', {
               id: snapshot.key,
               name: name,
-              isTitleChanging: false
+              isTitleChanging: false,
+              tasks: []
             })
           })
       } catch(e) { commit('errorHandler', e) }

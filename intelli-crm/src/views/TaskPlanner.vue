@@ -50,8 +50,6 @@ export default ({
       openModal_editTask(boardIndex, i, boardID, task)
     }
 
-
-
     return {
       url,
       loading,

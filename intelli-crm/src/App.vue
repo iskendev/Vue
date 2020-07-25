@@ -1,5 +1,5 @@
 <template lang='pug'>
-  div#app
+  div#app(:class='{light: theme === "light"}')
     Navbar
     div.main
       Sidebar(v-if='isLoggedIn')
@@ -22,6 +22,8 @@ export default {
     provideStore($store)
     const isLoggedIn = computed(() => $store.getters.isLoggedIn)
     const userInfo = computed(() => $store.getters.userInfo)
+    const theme = computed(() => $store.getters.theme)
+
     onMounted(async () => {
       const user = firebase.auth().currentUser
       if (user) {
@@ -32,7 +34,7 @@ export default {
         $router.push('/login').catch(() => {})
       }
     })
-    return { isLoggedIn, userInfo }
+    return { isLoggedIn, userInfo, theme }
   }
 }
 </script>

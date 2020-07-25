@@ -87,7 +87,34 @@
           font-size: 1.5rem;
           transform: translateY(1px);
         }
+
+
       }
+    }
+  }
+}
+
+.light {
+
+  .navbar {
+    background-color: $bg-light-blueish !important;
+
+    &-title{
+      color: $bg-dark;
+    }
+
+    &-items {
+      ul li {
+        color: $bg-dark;
+      }
+
+    }
+  }
+
+  .fa-moon {
+    color: $bg-dark;
+    &:hover {
+      color: $bg-dark
     }
   }
 }

@@ -6,8 +6,8 @@
       ul
         li
           i.fas.fa-info
-          i.fas.fa-moon(v-if='theme === "dark"' @click='toggleTheme("light")')
-          i.fas.fa-sun(v-if='theme === "light"' @click='toggleTheme("dark")')
+          i.fas.fa-moon(v-if='theme === "light"'  @click='toggleTheme("dark")')
+          i.fas.fa-sun(v-if='theme === "dark"' @click='toggleTheme("light")')
           SmallLoader(v-if='loading')
           span(v-else) {{ userName }}
           div.tooltip <i class='fas fa-sign-in-alt' @click='logOut()'></i>

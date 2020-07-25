@@ -18,7 +18,6 @@ export default new Vuex.Store({
   mutations: {
     toggleTheme(state, payload) {
       state.theme = payload
-      console.log(state.theme);
     },
     loadingOFF(state) {
       state.loading = false
