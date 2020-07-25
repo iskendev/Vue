@@ -9,6 +9,8 @@ import 'vue-toast-notification/dist/theme-default.css'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/database'
+import VueRouter from 'vue-router'
+import dateTime from './filters/dateTime'
 
 Vue.use(VueCompositionApi);
 Vue.use(draggable);
@@ -16,6 +18,8 @@ Vue.use(VueToast, {
   position: 'top-right',
   duration: 3000
 });
+
+Vue.filter('date', dateTime)
 
 Vue.config.productionTip = false
 

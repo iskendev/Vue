@@ -5,7 +5,7 @@
     div.navbar-items(v-if='isLoggedIn')
       ul
         li
-          i.fas.fa-info
+          span.date-time {{ date | date('datetime')}}
           i.fas.fa-moon(v-if='theme === "light"'  @click='toggleTheme("dark")')
           i.fas.fa-sun(v-if='theme === "dark"' @click='toggleTheme("light")')
           SmallLoader(v-if='loading')
@@ -17,7 +17,7 @@
 <script>
 import { authHandler } from '../composable/views/auth'
 import { navbarHandlers } from '../composable/components/navbar'
-import { watch, ref } from '@vue/composition-api'
+import { watch, ref, onMounted, onBeforeUnmount } from '@vue/composition-api'
 import SmallLoader from '../components/SmallLoader'
 export default ({
   name: 'Navbar',
@@ -30,7 +30,21 @@ export default ({
       if (userName)
         loading.value = false
     })
-    return { isLoggedIn, logOut, userName, toggleSidebarVisibility, theme, toggleTheme, loading }
+
+    let date = ref(new Date())
+    let interval = ref(null)
+
+    onMounted(() => {
+      setInterval(() => {
+        date.value = new Date()
+      }, 1000)
+    })
+
+    onBeforeUnmount(() => {
+      clearInterval(interval.value)
+    })
+
+    return { isLoggedIn, logOut, userName, toggleSidebarVisibility, theme, toggleTheme, loading, date, interval }
   }
 })
 </script>

@@ -9,8 +9,5 @@
 </script>
 
 <style lang="scss">
-.small-loader {
-  transform: translateY(4px);
-  margin: 0 5px 0 7px;
-}
+@import '../sass/components/_loader.scss';
 </style>
