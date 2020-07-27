@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import ui from './modules/ui'
 import trello from './modules/task-planner'
 import auth from './modules/auth'
+import clockify from './modules/clockify'
 
 Vue.use(Vuex)
 
@@ -25,6 +26,7 @@ export default new Vuex.Store({
 
   },
   modules: {
-    ui, trello, auth
+    ui, trello, auth,
+    clockify
   }
 })

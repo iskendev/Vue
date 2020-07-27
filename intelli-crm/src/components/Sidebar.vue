@@ -20,7 +20,7 @@ export default {
   setup(_, {root: {$store}}) {
     const titles = computed(() => [
         { title: 'Home', icon: 'home', path: '/' },
-        { title: 'Time tracker', icon: 'clock', path: '/time-tracker'},
+        { title: 'Clockify', icon: 'clock', path: '/clockify'},
         { title: 'Todo', icon: 'pencil-alt', path: '/todo'},
         { title: 'Chat', icon: 'comment-dots', path: '/chat'},
         { title: 'Code Snippets', icon: 'code', path: '/code-snippets'},

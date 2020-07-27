@@ -10,7 +10,7 @@ export default new Router({
   routes: [
     { path: '/', name: 'home', component: Home },
     { path: '/login', name: 'login', component: () => import('./views/Login.vue') },
-    { path: '/time-tracker', name: 'time-tracker', component: () => import('./views/TimeTracker.vue') },
+    { path: '/clockify', name: 'clockify', component: () => import('./views/Clockify.vue') },
     { path: '/todo', name: 'todo', component: () => import('./views/TaskPlanner.vue') },
     { path: '/expense-tracker', name: 'expense-tracker', component: () => import('./views/ExpenseTracker.vue') },
     { path: '/relaxer', name: 'relaxer', component: () => import('./views/Relaxer.vue') },

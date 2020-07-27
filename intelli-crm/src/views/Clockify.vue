@@ -2,7 +2,8 @@
   div.time-tracker
     Loader(v-if='loading')
     div(v-else)
-      form(v-if='!userInfo.clockifyKey' @submit.prevent='assignUserClockifyKey()')
+      // TODO must be with !
+      form(v-if='userInfo.clockifyKey' @submit.prevent='assignUserClockifyKey()')
         div.time-tracker__field-wrapper
           Input(
             type='text'
@@ -25,10 +26,8 @@ export default {
   setup(_, { root: { $store } }) {
 
     const assignUserClockifyKey = () => {
-      // store.dispatch()
-      console.log(clockifyKey.value);
       if (clockifyKey.value) {
-
+        $store.dispatch('assignUserClockifyKey', clockifyKey.value)
       }
     }
     const userInfo = computed(() => $store.getters.userInfo)
