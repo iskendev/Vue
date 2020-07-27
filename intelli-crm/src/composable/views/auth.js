@@ -6,28 +6,45 @@ export function authHandler(store, router) {
   const password = ref('')
   const name = ref('')
   const isRegistered = ref(true)
+
+  // const inputData = computed(() => ([
+  //   { model: name.value, classs: 'name', isVisible: isRegistered.value, title: 'Name', icon: 'user', field: 'name', type: 'text' },
+  //   { model: email.value, classs: 'icon', isVisible: true, title: 'E-mail', icon: 'envelope', field: 'e-mail', type: 'email' },
+  //   { model: password.value, classs: 'password', isVisible: true, title: 'Password', icon: 'lock', field: 'password', type: 'password' },
+  // ]))
+
+  // let inputData = computed({
+  //   get: () => [
+  //     { model: name.value, classs: 'name', isVisible: isRegistered.value, title: 'Name', icon: 'user', field: 'name', type: 'text' },
+  //     { model: email.value, classs: 'icon', isVisible: true, title: 'E-mail', icon: 'envelope', field: 'e-mail', type: 'email' },
+  //     { model: password.value, classs: 'password', isVisible: true, title: 'Password', icon: 'lock', field: 'password', type: 'password' },
+  //   ],
+  //   set: (value) => value
+  // })
+
   const signIn = async () => {
     if (isRegistered.value) {
       try {
-        await store.dispatch('signIn', {
-          email: email.value, 
-          password: password.value 
-        })
+        console.log(email.value);
+        // await store.dispatch('signIn', {
+        //   email: email.value,
+        //   password: password.value
+        // })
         router.push('/')
       } catch (e) {}
     } else {
       try {
-        await store.dispatch('register', { 
-          name: name.value, 
-          email: email.value, 
-          password: password.value 
+        await store.dispatch('register', {
+          name: name.value,
+          email: email.value,
+          password: password.value
         })
         router.push('/')
       } catch (e) {}
     }
   }
   const checkIsRegistered = (type) => {
-    type === 'sign' ? isRegistered.value = false : isRegistered.value = true      
+    type === 'sign' ? isRegistered.value = false : isRegistered.value = true
   }
 
   // out
