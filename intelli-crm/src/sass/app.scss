@@ -32,6 +32,12 @@ body {
       background-color: $bg-blueish;
     }
   }
+
+  .full_width {
+    display: grid;
+    grid-template-columns: 1fr !important;
+  }
+
 }
 
 .light {

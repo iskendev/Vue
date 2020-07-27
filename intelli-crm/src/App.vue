@@ -1,7 +1,7 @@
 <template lang='pug'>
   div#app(:class='{light: theme === "light"}')
     Navbar
-    div.main
+    div.main.split_place(:class="{ full_width: !isLoggedIn }")
       Sidebar(v-if='isLoggedIn')
       router-view.view
 </template>
@@ -23,6 +23,7 @@ export default {
     const isLoggedIn = computed(() => $store.getters.isLoggedIn)
     const userInfo = computed(() => $store.getters.userInfo)
     const theme = computed(() => $store.getters.theme)
+    const sidebarVisibility = computed(() => $store.getters.sidebarVisibility)
 
     onMounted(async () => {
       const user = firebase.auth().currentUser
@@ -34,7 +35,7 @@ export default {
         $router.push('/login').catch(() => {})
       }
     })
-    return { isLoggedIn, userInfo, theme }
+    return { isLoggedIn, userInfo, theme, sidebarVisibility }
   }
 }
 </script>

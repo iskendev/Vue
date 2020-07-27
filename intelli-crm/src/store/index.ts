@@ -8,17 +8,12 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    theme: 'dark',
     loading: false
   },
   getters: {
-    theme: s => s.theme,
     loading: s => s.loading
   },
   mutations: {
-    toggleTheme(state, payload) {
-      state.theme = payload
-    },
     loadingOFF(state) {
       state.loading = false
     },

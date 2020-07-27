@@ -6,30 +6,18 @@ export function authHandler(store, router) {
   const password = ref('')
   const name = ref('')
   const isRegistered = ref(true)
-
-  // const inputData = computed(() => ([
-  //   { model: name.value, classs: 'name', isVisible: isRegistered.value, title: 'Name', icon: 'user', field: 'name', type: 'text' },
-  //   { model: email.value, classs: 'icon', isVisible: true, title: 'E-mail', icon: 'envelope', field: 'e-mail', type: 'email' },
-  //   { model: password.value, classs: 'password', isVisible: true, title: 'Password', icon: 'lock', field: 'password', type: 'password' },
-  // ]))
-
-  // let inputData = computed({
-  //   get: () => [
-  //     { model: name.value, classs: 'name', isVisible: isRegistered.value, title: 'Name', icon: 'user', field: 'name', type: 'text' },
-  //     { model: email.value, classs: 'icon', isVisible: true, title: 'E-mail', icon: 'envelope', field: 'e-mail', type: 'email' },
-  //     { model: password.value, classs: 'password', isVisible: true, title: 'Password', icon: 'lock', field: 'password', type: 'password' },
-  //   ],
-  //   set: (value) => value
-  // })
+  const isLoading = ref(false)
 
   const signIn = async () => {
+
     if (isRegistered.value) {
       try {
-        console.log(email.value);
-        // await store.dispatch('signIn', {
-        //   email: email.value,
-        //   password: password.value
-        // })
+        isLoading.value = true
+        await store.dispatch('signIn', {
+          email: email.value,
+          password: password.value
+        })
+        isLoading.value = false
         router.push('/')
       } catch (e) {}
     } else {
@@ -57,6 +45,6 @@ export function authHandler(store, router) {
   }
 
 
-  return { name, email, password, signIn, isRegistered, checkIsRegistered, isLoggedIn, logOut, userName }
+  return { name, email, password, signIn, isRegistered, checkIsRegistered, isLoggedIn, logOut, userName, isLoading }
 }
 
