@@ -1,0 +1,3 @@
+GET https://api.clockify.me/api/v1/user
+Content-Type: application/json
+X-Api-Key: Xx6/TmavehM08ZbY
