@@ -19,6 +19,9 @@ export default {
     clearUserInfo(state: any) {
       state.userInfo = {}
     },
+    setUsersClockifyKey(state: any, payload: any) {
+      state.userInfo.clockifyKey = payload
+    },
     errorHandler(state: any, e: any) {
       Vue.$toast.open({
         message: e.message,
@@ -47,7 +50,7 @@ export default {
         const uid = await dispatch('getUid')
         const info = (await firebase.database().ref(`/users/${uid}/info`).once('value')).val()
         commit('setUserInfo', info)
-      } catch (e) { 
+      } catch (e) {
         commit('errorHandler', e)
         throw e
       }
@@ -65,6 +68,9 @@ export default {
     async signOut({ commit }: any) {
       await firebase.auth().signOut()
       commit('setUserAuth', 'out')
+    },
+    setUsersClockifyKey({commit}:any, payload:any) {
+      commit('setUsersClockifyKey', payload)
     }
   }
 }

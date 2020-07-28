@@ -1,15 +1,15 @@
 <template lang='pug'>
-  div.time-tracker
+  div.time-tracker(:class='{center_form: !loading}')
     Loader(v-if='loading')
     div(v-else)
       // TODO must be with !
-      form(v-if='userInfo.clockifyKey' @submit.prevent='assignUserClockifyKey()')
+      form(v-if='!userInfo.clockifyKey && !clockifyData' @submit.prevent='assignUserClockifyKey()')
         div.time-tracker__field-wrapper
           Input(
             type='text'
             cssClass='time-tracker-input'
             v-model='clockifyKey'
-            label='Enter generated key')
+            label='Enter the generated key')
           button Submit
       div(v-else)
         span JJJJJ
@@ -25,31 +25,36 @@ export default {
   components: { Input, Loader },
   setup(_, { root: { $store } }) {
 
-    const assignUserClockifyKey = () => {
-      if (clockifyKey.value) {
-        $store.dispatch('assignUserClockifyKey', clockifyKey.value)
-      }
-    }
+    // const clockifyKeyVuex = computed(() => $store.getters.userInfo.clockifyKey)
+    const clockifyData = computed(() => $store.getters.clockifyData)
+    const clockifyKeyVuex = computed(() => $store.getters.userClockifyKey)
     const userInfo = computed(() => $store.getters.userInfo)
     const loading = ref(true)
     const clockifyKey = ref('')
+
+    const assignUserClockifyKey = () => {
+      if (clockifyKey.value) {
+        $store.dispatch('assignUserClockifyKey', clockifyKey.value)
+        loading.value = true
+      }
+    }
 
     watch(userInfo, () => {
       loading.value = false
     })
 
-    // onMounted(() => {
-      // axiosClockify.get('/workspaces/5e8395d5261ba37dee85a378/projects')
-        // .then(function (response) {
-          // console.log(response);
-        // })
-      //  console.log(isKey.value.email);
-    // })
-    // const log = () => {
-      // console.log(clockifyKey.value);
-    // }
+    watch(clockifyData, () => {
+      loading.value = false
+    })
 
-    return { clockifyKey, userInfo, assignUserClockifyKey, loading }
+    onMounted(() => {
+      // if (clockifyKeyVuex.value !== null) {
+      //   $store.dispatch('getUserData')
+      // }
+      // console.log(userInfo.value)
+    })
+
+    return { clockifyKey, clockifyKeyVuex, clockifyData, userInfo, assignUserClockifyKey, loading }
   }
 }
 </script>
