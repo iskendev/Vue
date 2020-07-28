@@ -2,7 +2,6 @@
   div.time-tracker(:class='{center_form: !loading}')
     Loader(v-if='loading')
     div(v-else)
-      // TODO must be with !
       form(v-if='!userInfo.clockifyKey && !clockifyData' @submit.prevent='assignUserClockifyKey()')
         div.time-tracker__field-wrapper
           Input(
@@ -24,10 +23,7 @@ export default {
   name: '',
   components: { Input, Loader },
   setup(_, { root: { $store } }) {
-
-    // const clockifyKeyVuex = computed(() => $store.getters.userInfo.clockifyKey)
     const clockifyData = computed(() => $store.getters.clockifyData)
-    const clockifyKeyVuex = computed(() => $store.getters.userClockifyKey)
     const userInfo = computed(() => $store.getters.userInfo)
     const loading = ref(true)
     const clockifyKey = ref('')
@@ -39,22 +35,20 @@ export default {
       }
     }
 
-    watch(userInfo, () => {
-      loading.value = false
+    watch(userInfo, async () => {
+      if (userInfo.value.clockifyKey) {
+        await $store.dispatch('getUserData', userInfo.value.clockifyKey)
+        loading.value = false
+      } else {
+        loading.value = false
+      }
     })
 
     watch(clockifyData, () => {
       loading.value = false
     })
 
-    onMounted(() => {
-      // if (clockifyKeyVuex.value !== null) {
-      //   $store.dispatch('getUserData')
-      // }
-      // console.log(userInfo.value)
-    })
-
-    return { clockifyKey, clockifyKeyVuex, clockifyData, userInfo, assignUserClockifyKey, loading }
+    return { clockifyKey, clockifyData, userInfo, assignUserClockifyKey, loading }
   }
 }
 </script>
