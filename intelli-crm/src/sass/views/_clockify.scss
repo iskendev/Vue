@@ -1,0 +1,84 @@
+@import '../variables.scss';
+
+.time-tracker {
+  position: relative;
+  overflow-y: auto;
+
+  &--form-wrapper {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &__field-wrapper {
+    display: flex;
+    flex-direction: column;
+
+    .time-tracker-input {
+      display: flex;
+      flex-direction: column;
+
+      label {
+        font-size: 1.2rem;
+      }
+
+      input {
+        padding: 5px;
+        outline: none;
+        border: 0;
+        border-radius: 3px;
+        margin: 3px 0 15px 0;
+      }
+    }
+
+    button {
+      border-radius: 3px;
+      outline: none;
+      border: 0;
+      background-color: $info;
+      cursor: pointer;
+      color: white;
+      padding: 5px;
+    }
+  }
+
+  &__projects {
+    &-email {
+      display: flex;
+      justify-content: flex-end;
+      padding-top: 5px;
+      font-size: 1.4rem;
+    }
+
+    &-description {
+      margin-top: 25px;
+      display: flex;
+      justify-content: space-between;
+
+      &__single{
+        margin-bottom: 15px;
+
+        .highlight_title {
+          color: white;
+          background-color: $info;
+          border-color: $bg-dark !important;
+        }
+        .single-title {
+          border: 1px solid $letters;
+          padding: 3px 10px;
+          border-radius: 15px;
+          cursor: pointer;
+          font-size: 1.5rem;
+
+          &:hover {
+            color: white;
+            background-color: $info;
+            border-color: $bg-dark;
+          }
+        }
+      }
+    }
+  }
+
+}

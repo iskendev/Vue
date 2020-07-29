@@ -10,8 +10,15 @@
             v-model='clockifyKey'
             label='Enter the generated key')
           button Submit
-      div(v-else)
-        span JJJJJ
+      div.time-tracker__projects(v-else)
+        div.time-tracker__projects-email
+          span {{ clockifyData.info.email }}
+        div.time-tracker__projects-description
+          div.time-tracker__projects-description__single(v-for='project in clockifyData.projects')
+            span.single-title(:class='{highlight_title: project.name === projectName}' @click='setProjectName(project.name)') {{ project.name }}
+        ul(v-for='project in clockifyData.projects')
+          li(v-for='entry in project.entries')
+            span(v-if='project.name === projectName') {{ entry.description }}
 </template>
 
 <script>
@@ -27,12 +34,17 @@ export default {
     const userInfo = computed(() => $store.getters.userInfo)
     const loading = ref(true)
     const clockifyKey = ref('')
+    const projectName = ref('belliata.com')
 
     const assignUserClockifyKey = () => {
       if (clockifyKey.value) {
         $store.dispatch('assignUserClockifyKey', clockifyKey.value)
         loading.value = true
       }
+    }
+
+    const setProjectName = (name) => {
+      projectName.value = name
     }
 
     watch(userInfo, async () => {
@@ -46,6 +58,7 @@ export default {
 
     watch(clockifyData, () => {
       loading.value = false
+      console.log(clockifyData.value);
     })
 
     onMounted(async () => {
@@ -53,11 +66,11 @@ export default {
         loading.value = false
     })
 
-    return { clockifyKey, clockifyData, userInfo, assignUserClockifyKey, loading }
+    return { clockifyKey, clockifyData, userInfo, assignUserClockifyKey, loading, projectName, setProjectName }
   }
 }
 </script>
 
 <style lang="scss">
-@import '../sass/views/_time-tracker.scss'
+@import '../sass/views/_clockify.scss'
 </style>
