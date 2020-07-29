@@ -2,11 +2,9 @@
 
 .loader {
   position: absolute;
-  left: 0;
-  right: 0;
-  margin-left: auto;
-  margin-right: auto;
-  width: 200px
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .no_absolute {

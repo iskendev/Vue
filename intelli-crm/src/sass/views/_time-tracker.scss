@@ -2,9 +2,13 @@
 
 .time-tracker {
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
+  &--form-wrapper {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
 
   &__field-wrapper {
     display: flex;

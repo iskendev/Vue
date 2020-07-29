@@ -1,5 +1,6 @@
 @import '../variables';
 .task-planner {
+  position: relative;
   overflow: auto;
   background-position: center;
   background-repeat: no-repeat;
@@ -21,19 +22,19 @@
         color: $success;
       }
     }
-    
+
     .fa-image {
       margin-left: 15px;
       font-size: 1.8rem;
       cursor: pointer;
     }
-    
+
     ul {
       margin-left: 15px;
       display: flex;
 
-      li { 
-        margin-right: 5px; 
+      li {
+        margin-right: 5px;
         cursor: pointer;
 
         &:hover {
@@ -66,7 +67,7 @@
         .fa-pencil-alt,
         .fa-trash-alt,
         .fa-check {
-          cursor: pointer; 
+          cursor: pointer;
           margin-left: 10px;
         }
 

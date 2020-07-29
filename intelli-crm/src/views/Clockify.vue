@@ -1,8 +1,8 @@
 <template lang='pug'>
-  div.time-tracker(:class='{center_form: !loading}')
+  div.time-tracker
     Loader(v-if='loading')
     div(v-else)
-      form(v-if='!userInfo.clockifyKey && !clockifyData' @submit.prevent='assignUserClockifyKey()')
+      form.time-tracker--form-wrapper(v-if='!userInfo.clockifyKey && !clockifyData' @submit.prevent='assignUserClockifyKey()')
         div.time-tracker__field-wrapper
           Input(
             type='text'
@@ -46,6 +46,11 @@ export default {
 
     watch(clockifyData, () => {
       loading.value = false
+    })
+
+    onMounted(async () => {
+      if (userInfo.value.clockifyKey)
+        loading.value = false
     })
 
     return { clockifyKey, clockifyData, userInfo, assignUserClockifyKey, loading }
