@@ -16,9 +16,18 @@
         div.time-tracker__projects-description
           div.time-tracker__projects-description__single(v-for='project in clockifyData.projects')
             span.single-title(:class='{highlight_title: project.name === projectName}' @click='setProjectName(project.name)') {{ project.name }}
-        ul(v-for='project in clockifyData.projects')
+        ul.time-tracker__projects-entry(v-for='project in clockifyData.projects')
           li(v-for='entry in project.entries')
-            span(v-if='project.name === projectName') {{ entry.description }}
+            div.entry-wrapper(v-if='project.name === projectName')
+              div
+                i.fas.fa-lock(v-if='entry.isLocked')
+                span.description {{ entry.description }}
+              div
+                i.fas.fa-dollar-sign(:class='(entry.billable ? "dollar_billable" : "dollar_not_billable")')
+                i.fas.fa-tag
+                i.far.fa-stop-circle
+                i.far.fa-play-circle
+
 </template>
 
 <script>
