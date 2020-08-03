@@ -17,8 +17,7 @@
           div.time-tracker__projects-description__single(v-for='project in clockifyData.projects')
             span.single-title(
               :class='{highlight_title: project.name === projectName}'
-              @click='setProjectName(project.name)')
-              {{ project.name }}
+              @click='setProjectName(project.name)') {{ project.name }}
         ul.time-tracker__projects-entry(v-for='project in clockifyData.projects')
           li(v-for='entry in project.entries')
             div.entry-wrapper(v-if='project.name === projectName')
@@ -26,11 +25,16 @@
                 i.fas.fa-lock(v-if='entry.isLocked')
                 span.description {{ entry.description }}
               div
-                i.fas.fa-dollar-sign(:class='(entry.billable ? "dollar_billable" : "dollar_not_billable")')
-                i.fas.fa-tag
-                i.far.fa-stop-circle
-                i.far.fa-play-circle
-
+                i.fas.fa-dollar-sign(:title='entry.billable ? tags : "Not Billable"' :class='entry.billable ? "dollar_billable" : "dollar_not_billable"')
+                  //- div.tooltip
+                //- span.tooltiptext {{  }}
+                //- div.tooltip(v-if='entry.tagIds !== null')
+                //-   i.fas.fa-tag
+                //-   span.tooltiptext tags tags tags
+                //- div.tooltip
+                //-   i.far.fa-stop-circle
+                //-   i.far.fa-play-circle
+                //-   span.tooltiptext {{ }}
 </template>
 
 <script>
@@ -55,6 +59,8 @@ export default {
       }
     }
 
+    const tags = ref(['one', 'two', 'three'])
+
     const setProjectName = (name) => {
       projectName.value = name
     }
@@ -78,7 +84,7 @@ export default {
         loading.value = false
     })
 
-    return { clockifyKey, clockifyData, userInfo, assignUserClockifyKey, loading, projectName, setProjectName }
+    return { clockifyKey, clockifyData, userInfo, assignUserClockifyKey, loading, projectName, setProjectName, tags }
   }
 }
 </script>
