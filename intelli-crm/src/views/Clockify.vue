@@ -15,7 +15,10 @@
           span {{ clockifyData.info.email }}
         div.time-tracker__projects-description
           div.time-tracker__projects-description__single(v-for='project in clockifyData.projects')
-            span.single-title(:class='{highlight_title: project.name === projectName}' @click='setProjectName(project.name)') {{ project.name }}
+            span.single-title(
+              :class='{highlight_title: project.name === projectName}'
+              @click='setProjectName(project.name)')
+              {{ project.name }}
         ul.time-tracker__projects-entry(v-for='project in clockifyData.projects')
           li(v-for='entry in project.entries')
             div.entry-wrapper(v-if='project.name === projectName')
