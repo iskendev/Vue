@@ -21,19 +21,18 @@
         ul.time-tracker__projects-entry(v-for='project in clockifyData.projects')
           li(v-for='entry in project.entries')
             div.entry-wrapper(v-if='project.name === projectName')
-              div
+              div.entry-title
                 i.fas.fa-lock(v-if='entry.isLocked')
                 span.description {{ entry.description }}
-              div
-                i.fas.fa-dollar-sign(:title='entry.billable ? tags : "Not Billable"' :class='entry.billable ? "dollar_billable" : "dollar_not_billable"')
-                  //- div.tooltip
-                //- span.tooltiptext {{  }}
-                //- div.tooltip(v-if='entry.tagIds !== null')
-                //-   i.fas.fa-tag
-                //-   span.tooltiptext tags tags tags
-                //- div.tooltip
-                //-   i.far.fa-stop-circle
-                //-   i.far.fa-play-circle
+              div.entry-info
+                span 6:15
+                i.fas.fa-tag(v-if='entry.tagIds === null' title="No tags")
+                span.tags(v-else) learning, self-education, miscelanious, miscelanious, miscelanious
+                i.fas.fa-dollar-sign(
+                  :title='entry.billable ? "Billable" : "Non-billable"'
+                  :class='entry.billable ? "dollar_billable" : "dollar_not_billable"')
+                //- i.far.fa-stop-circle
+                i.far.fa-play-circle
                 //-   span.tooltiptext {{ }}
 </template>
 
