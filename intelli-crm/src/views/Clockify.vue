@@ -89,5 +89,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../sass/views/_clockify.scss'
+@import '../sass/views/_clockify.scss';
 </style>
