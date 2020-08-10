@@ -1,7 +1,6 @@
 <template lang='pug'>
   div.loader
     img(src='../assets/loader.svg')
-
 </template>
 
 <script>

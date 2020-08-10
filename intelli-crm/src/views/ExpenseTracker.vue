@@ -1,6 +1,7 @@
 <template lang='pug'>
   div
     h1 Expense Tracker
+    span WE ARE THE CHAMPIONS
 </template>
 
 <script>
