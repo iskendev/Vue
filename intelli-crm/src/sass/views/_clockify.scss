@@ -88,11 +88,11 @@
         margin: 30px 0;
 
         .entry-wrapper {
-          border-bottom: 1px solid $info;
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          // justify-content: space-between;
-          padding: 0 5px;
+          border-radius: 5px;
+          background-color: #284253;
+          color: $letters;
+          font-size: 1.4rem;
+          padding: 10px;
 
           .tooltip {
             position: relative;
@@ -129,64 +129,70 @@
             }
           }
 
-          .entry-info {
+          .entry-date {
+            border-bottom: 1px solid #6d6d6d;
+            padding-bottom: 5px;
+            font-size: 1.3rem;
             display: flex;
             justify-content: space-between;
-            color: $info;
+          }
+
+          .entry-info {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            padding: 30px 0 20px 0;
+            align-items: center;
 
             .tags {
               font-size: 1.2rem;
+            }
 
+            &__title {
+              .fa-lock {
+                margin: 0 10px 0 0;
+                color: $pinky;
+              }
+            }
+            &__details {
+              display: grid;
+              grid-template-columns: 3fr 1fr 3fr 1fr 1fr 1fr;
+              align-items: center;
 
-              // background-color: $info;
+              div {
+                text-align: center;
+                border-right: 1px solid $letters;
+              }
+
+              .entry-tags {
+                border-left: 1px solid $letters;
+              }
+
+              i {
+                color: $info;
+                cursor: pointer;
+                font-size: 1.5rem;
+              }
+
+              .fa-calendar-alt {
+                margin-left: 15px;
+              }
+
+              .fa-play-circle,
+              .fa-ellipsis-h {
+                font-size: 1.7rem;
+              }
+
+              .dollar_billable {
+                color: $success;
+              }
+
+              .dollar_not_billable {
+                color: rgba(255, 255, 255, 0.5);
+              }
             }
           }
-
-          i {
-            color: $info;
-            cursor: pointer;
-            margin: 0 15px;
-            font-size: 1.7rem;
-          }
-
-          .fa-lock {
-            margin: 0 10px 0 0;
-            font-size: 1.4rem;
-            color: $pinky;
-          }
-          .fa-dollar-sign {
-
-
-          }
-
-          .dollar_billable {
-            color: $success;
-          }
-
-          .dollar_not_billable {
-            color: rgba(255, 255, 255, 0.5);
-          }
-
-          .fa-tag {
-
-          }
-
-          .fa-stop-circle {
-
-          }
-
-          .fa-play-circle {
-
-          }
-          .description {
-            color: $info;
-            font-size: 1.5rem;
-
-          }
         }
-
       }
     }
   }
-
 }

@@ -21,19 +21,31 @@
         ul.time-tracker__projects-entry(v-for='project in clockifyData.projects')
           li(v-for='entry in project.entries')
             div.entry-wrapper(v-if='project.name === projectName')
-              div.entry-title
-                i.fas.fa-lock(v-if='entry.isLocked')
-                span.description {{ entry.description }}
+              div.entry-date
+                span Today
+                span Total: 6:15
               div.entry-info
-                span 6:15
-                i.fas.fa-tag(v-if='entry.tagIds === null' title="No tags")
-                span.tags(v-else) learning, self-education, miscelanious, miscelanious, miscelanious
-                i.fas.fa-dollar-sign(
-                  :title='entry.billable ? "Billable" : "Non-billable"'
-                  :class='entry.billable ? "dollar_billable" : "dollar_not_billable"')
-                //- i.far.fa-stop-circle
-                i.far.fa-play-circle
-                //-   span.tooltiptext {{ }}
+                div.entry-info__title
+                  i.fas.fa-lock(v-if='entry.isLocked')
+                  span.description {{ entry.description }}
+                div.entry-info__details
+                  div.entry-tags(v-if='entry.tagIds === null' title="No tags")
+                    i.fas.fa-tag
+                  div.entry-tags(v-else)
+                    span.tags learning, self-education, miscelanious
+                  div
+                    i.fas.fa-dollar-sign(
+                    :title='entry.billable ? "Billable" : "Non-billable"'
+                    :class='entry.billable ? "dollar_billable" : "dollar_not_billable"')
+                  div
+                    span 6:15 PM -  7:45 PM
+                    i.far.fa-calendar-alt
+                  div
+                    span 1:30
+                  div
+                    i.far.fa-play-circle
+                  div
+                    i.fas.fa-ellipsis-h
 </template>
 
 <script>
