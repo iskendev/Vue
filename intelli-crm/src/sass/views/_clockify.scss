@@ -139,7 +139,7 @@
 
           .entry-info {
             display: grid;
-            grid-template-columns: 1fr 2fr;
+            grid-template-columns: 2fr 3fr;
             padding: 30px 0 20px 0;
             align-items: center;
 
@@ -152,10 +152,15 @@
                 margin: 0 10px 0 0;
                 color: $pinky;
               }
+              .client-name {
+                color: $danger;
+                margin-left: 10px;
+              }
             }
+
             &__details {
               display: grid;
-              grid-template-columns: 3fr 1fr 3fr 1fr 1fr 1fr;
+              grid-template-columns: 3fr 1fr 2fr 1fr 1fr 1fr;
               align-items: center;
 
               div {
@@ -164,7 +169,12 @@
               }
 
               .entry-tags {
+                margin-left: 10px;
                 border-left: 1px solid $letters;
+              }
+
+              .entry-start-end {
+                span { letter-spacing: 1px; }
               }
 
               i {

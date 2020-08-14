@@ -27,7 +27,8 @@
               div.entry-info
                 div.entry-info__title
                   i.fas.fa-lock(v-if='entry.isLocked')
-                  span.description {{ entry.description }}
+                  span.description {{ entry.description }}:
+                  span.client-name {{ entry.clientName }}
                 div.entry-info__details
                   div.entry-tags(v-if='entry.tagIds === null' title="No tags")
                     i.fas.fa-tag
@@ -37,11 +38,14 @@
                     i.fas.fa-dollar-sign(
                     :title='entry.billable ? "Billable" : "Non-billable"'
                     :class='entry.billable ? "dollar_billable" : "dollar_not_billable"')
-                  div
-                    span 6:15 PM -  7:45 PM
+                  div.entry-start-end
+                    span {{ entry.timeInterval.start | date('time') }} -  {{ entry.timeInterval.end | date('time') }}
                     i.far.fa-calendar-alt
                   div
-                    span 1:30
+                    // TODO https://github.com/jsmreese/moment-duration-format
+                    // TODO https://stackoverflow.com/questions/14934089/convert-iso-8601-duration-with-javascript
+                    span {{ entry.timeInterval.duration | iso-duration }}
+                    //- span {{ entry.timeInterval.duration | date('time') }}
                   div
                     i.far.fa-play-circle
                   div

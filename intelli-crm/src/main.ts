@@ -10,7 +10,7 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/database'
 import VueRouter from 'vue-router'
-import dateTime from './filters/dateTime'
+import { dateTime, isoDurationToTime } from './filters/dateTime'
 
 Vue.use(VueCompositionApi);
 Vue.use(draggable);
@@ -20,6 +20,7 @@ Vue.use(VueToast, {
 });
 
 Vue.filter('date', dateTime)
+Vue.filter('iso-duration', isoDurationToTime)
 
 Vue.config.productionTip = false
 

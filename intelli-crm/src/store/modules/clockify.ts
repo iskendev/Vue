@@ -47,12 +47,15 @@ const clockify = {
         response = await axiosClockify.get(`/workspaces/${userData.info.defaultWorkspace}/projects`)
         userData.projects = response.data.map((project: any) => ({...project, entries: []}))
 
-        response = await axiosClockify.get(`/workspaces/${userData.info.defaultWorkspace}/user/${userData.info.id}/time-entries`)
+        response = await axiosClockify.get(`/workspaces/${userData.info.defaultWorkspace}/user/${userData.info.id}/time-entries?consider-duration-format=true`)
+
+        console.log('entries res', response);
+
 
         userData.projects.map((project: any) => {
           response.data.forEach((entry: any) => {
             if (project.id === entry.projectId)
-              project.entries.push(entry)
+              project.entries.push({...entry, clientName: project.clientName})
           })
         })
         commit('setUserData', userData)
