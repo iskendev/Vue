@@ -1,5 +1,6 @@
 import firebase from 'firebase/app'
 import axios from 'axios'
+import { dateTime } from '../../filters/dateTime'
 
 const axiosClockify = axios.create({
   baseURL: 'https://api.clockify.me/api/v1',
@@ -18,6 +19,7 @@ const clockify = {
   },
   mutations: {
     setUserData(state: any, payload: any) {
+      console.log(payload);
       state.clockifyData = payload
     },
     sortEntriesByProject(state: any, { userData, response, tags }: any) {
@@ -46,6 +48,35 @@ const clockify = {
           })
         }
       })
+    },
+    sortByDate(state: any, payload: any) {
+      console.log(payload);
+
+      // let projects = payload.projects
+      // projects.forEach((project: any) => {
+      //   project.byDays = []
+      //   if (project.entries) {
+      //     project.entries.forEach((entry: any) => {
+      //       let start = dateTime(entry.timeInterval.start, 'date')
+      //       let end = dateTime(entry.timeInterval.end, 'date')
+      //       let arrayOfDates = []
+      //       let entryByDate = {}
+      //       if (start == end) {
+      //         project.byDays.push({start, end})
+      //       }
+      //       console.log(arrayOfDates.length);
+
+      //       // project.entriesByDate = {  }
+      //       console.log('start', start);
+      //       console.log('end', end);
+      //     })
+      //   }
+
+      //   console.log(project.byDays);
+
+      // })
+      // console.log(projects);
+
     }
   },
   actions: {
@@ -74,11 +105,14 @@ const clockify = {
         response = await axiosClockify.get(`/workspaces/${userData.info.defaultWorkspace}/projects`)
         userData.projects = response.data.map((project: any) => ({...project, entries: []}))
 
-        response = await axiosClockify.get(`/workspaces/${userData.info.defaultWorkspace}/user/${userData.info.id}/time-entries?consider-duration-format=true`)
+        response = await axiosClockify.get(`/workspaces/${userData.info.defaultWorkspace}/user/${userData.info.id}/time-entries?description=#2038 - Products page using Vue`)
+        console.log('hope', response);
+
         const tags = await axiosClockify.get(`/workspaces/${userData.info.defaultWorkspace}/tags`)
 
         commit('sortEntriesByProject', {userData, response, tags: tags.data})
         commit('sortTagsByEntries', userData)
+        commit('sortByDate', userData)
         commit('setUserData', userData)
 
       } catch (e) { commit('errorHandler', e) }

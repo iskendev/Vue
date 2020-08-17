@@ -52,7 +52,6 @@
 
 <script>
 import { ref, computed, onMounted, watch } from '@vue/composition-api'
-import { axiosClockify } from '../utils/axios'
 import Input from '../components/Input'
 import Loader from '../components/Loader'
 export default {
