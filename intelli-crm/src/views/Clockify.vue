@@ -33,17 +33,16 @@
                   div.entry-tags(v-if='entry.tagIds === null' title="No tags")
                     i.fas.fa-tag
                   div.entry-tags(v-else)
-                    span.tags learning, self-education, miscelanious
+                    span.tags(v-for='tag in entry.tagTitles') {{ tag }}
                   div
                     i.fas.fa-dollar-sign(
                     :title='entry.billable ? "Billable" : "Non-billable"'
                     :class='entry.billable ? "dollar_billable" : "dollar_not_billable"')
                   div.entry-start-end
-                    span {{ entry.timeInterval.start | date('time') }} -  {{ entry.timeInterval.end | date('time') }}
+                    span {{ entry.timeInterval.start | date('time') }} - {{ entry.timeInterval.end | date('time') }}
                     i.far.fa-calendar-alt
                   div
                     span {{ entry.timeInterval.duration | iso-duration }}
-                    //- span {{ entry.timeInterval.duration | date('time') }}
                   div
                     i.far.fa-play-circle
                   div

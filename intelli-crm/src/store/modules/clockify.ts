@@ -1,3 +1,4 @@
+// import { axiosClockify } from './../../utils/axios';
 import firebase from 'firebase/app'
 import axios from 'axios'
 
@@ -14,11 +15,38 @@ const clockify = {
     clockifyData: null
   },
   getters: {
-    clockifyData: (state:any) => state.clockifyData
+    clockifyData: (state:any) => state.clockifyData,
   },
   mutations: {
-    setUserData(state: any, payload: any ) {
+    setUserData(state: any, payload: any) {
       state.clockifyData = payload
+    },
+    sortEntriesByProject(state: any, { userData, response, tags }: any) {
+      userData.projects.map((project: any) => {
+        response.data.forEach((entry: any) => {
+          if (project.id === entry.projectId) {
+            project.entries.push({...entry, clientName: project.clientName, tags, tagTitles: []})
+          }
+        })
+      })
+    },
+    sortTagsByEntries(state: any, payload: any) {
+      let projects = payload.projects
+      projects.forEach((project: any) => {
+        if (project.entries) {
+          project.entries.forEach((entry: any) => {
+            entry.tags.forEach((tag: any) => {
+              if (entry.tagIds) {
+                entry.tagIds.forEach((id: any) => {
+                  if (tag.id === id) {
+                    entry.tagTitles.push(tag.name)
+                  }
+                })
+              }
+            })
+          })
+        }
+      })
     }
   },
   actions: {
@@ -48,17 +76,12 @@ const clockify = {
         userData.projects = response.data.map((project: any) => ({...project, entries: []}))
 
         response = await axiosClockify.get(`/workspaces/${userData.info.defaultWorkspace}/user/${userData.info.id}/time-entries?consider-duration-format=true`)
+        const tags = await axiosClockify.get(`/workspaces/${userData.info.defaultWorkspace}/tags`)
 
-        console.log('entries res', response);
-
-
-        userData.projects.map((project: any) => {
-          response.data.forEach((entry: any) => {
-            if (project.id === entry.projectId)
-              project.entries.push({...entry, clientName: project.clientName})
-          })
-        })
+        commit('sortEntriesByProject', {userData, response, tags: tags.data})
+        commit('sortTagsByEntries', userData)
         commit('setUserData', userData)
+
       } catch (e) { commit('errorHandler', e) }
     }
   },
