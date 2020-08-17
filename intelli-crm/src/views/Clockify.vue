@@ -33,7 +33,8 @@
                   div.entry-tags(v-if='entry.tagIds === null' title="No tags")
                     i.fas.fa-tag
                   div.entry-tags(v-else)
-                    span.tags(v-for='tag in entry.tagTitles') {{ tag }}
+                    span.tags(v-for='tag in entry.tagTitles') {{ tag | cutExtraWords(entry.tagTitles) }}
+                    span.dots ...
                   div
                     i.fas.fa-dollar-sign(
                     :title='entry.billable ? "Billable" : "Non-billable"'

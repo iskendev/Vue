@@ -1,4 +1,3 @@
-// import { axiosClockify } from './../../utils/axios';
 import firebase from 'firebase/app'
 import axios from 'axios'
 
