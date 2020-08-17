@@ -1,4 +1,5 @@
 import moment from 'moment'
+const momentDurationFormatSetup = require("moment-duration-format");
 
 export function dateTime(value, format = 'date') {
  const options = {}
@@ -18,18 +19,5 @@ export function dateTime(value, format = 'date') {
 }
 
 export function isoDurationToTime(value) {
-  // let date = new Date()
-  // let a = moment.duration(value)
-  // return date.parse(value)
-  // if (value.length > 5) {
-  //   let duration = value.replace(/PT(\d+)H(\d+)M/, "$1:$2")
-  //   // if (duration.length < 4) {
-  //   //   let durationArr = duration.split('')
-  //   //   durationArr.splice(2, 0, '0')
-  //   //   return durationArr.join('')
-  //   // }
-  //   return duration
-  // }
-  // let pattern = /\d+/g
-  // return `0:${value.match(pattern)}`
+  return moment.duration(value).format()
 }

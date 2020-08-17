@@ -42,8 +42,6 @@
                     span {{ entry.timeInterval.start | date('time') }} -  {{ entry.timeInterval.end | date('time') }}
                     i.far.fa-calendar-alt
                   div
-                    // TODO https://github.com/jsmreese/moment-duration-format
-                    // TODO https://stackoverflow.com/questions/14934089/convert-iso-8601-duration-with-javascript
                     span {{ entry.timeInterval.duration | iso-duration }}
                     //- span {{ entry.timeInterval.duration | date('time') }}
                   div
