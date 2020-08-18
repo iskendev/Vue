@@ -19,7 +19,6 @@ const clockify = {
   },
   mutations: {
     setUserData(state: any, payload: any) {
-      console.log(payload);
       state.clockifyData = payload
     },
     sortEntriesByProject(state: any, { userData, response, tags }: any) {
@@ -50,33 +49,30 @@ const clockify = {
       })
     },
     sortByDate(state: any, payload: any) {
-      console.log(payload);
+      let projects = payload.projects
 
-      // let projects = payload.projects
-      // projects.forEach((project: any) => {
-      //   project.byDays = []
-      //   if (project.entries) {
-      //     project.entries.forEach((entry: any) => {
-      //       let start = dateTime(entry.timeInterval.start, 'date')
-      //       let end = dateTime(entry.timeInterval.end, 'date')
-      //       let arrayOfDates = []
-      //       let entryByDate = {}
-      //       if (start == end) {
-      //         project.byDays.push({start, end})
-      //       }
-      //       console.log(arrayOfDates.length);
+      projects.forEach((project: any) => {
+        if (project.entries) {
+          project.descriptions = []
+          project.dates = []
+          project.entries.forEach((entry: any) => {
+            project.descriptions.push(entry.description)
+            project.dates.push(dateTime(entry.timeInterval.start, 'date'))
+          })
+          project.descriptions = Array.from(new Set(project.descriptions))
+          project.dates = Array.from(new Set(project.dates))
 
-      //       // project.entriesByDate = {  }
-      //       console.log('start', start);
-      //       console.log('end', end);
-      //     })
-      //   }
+          project.dates = project.dates.map((date: any) => ({ date, entries: [], isVisible: true }))
 
-      //   console.log(project.byDays);
-
-      // })
-      // console.log(projects);
-
+          project.entries.forEach((entry: any) => {
+            project.dates.map((date: any) => {
+              if (dateTime(entry.timeInterval.start, 'date') === date.date) {
+                date.entries.push(entry)
+              }
+            })
+          })
+        }
+      })
     }
   },
   actions: {
