@@ -24,7 +24,7 @@
               div.entry-date-time__date
                 span.entry-date-time__date--date {{ date.date }}
                 span.entry-date-time__date--length(@click='date.isVisible = !date.isVisible') {{ date.entries.length }}
-              span Total
+              span Total: {{ date.total }}
             div(v-if='date.isVisible')
               div.entry-wrapper(v-for='(entry, i) in date.entries' :key='i')
                 div.entry-info
@@ -67,6 +67,24 @@ export default {
     const clockifyKey = ref('')
     const projectName = ref('belliata.com')
 
+    const totalTime = computed(() => {
+      let projects = clockifyData.value.projects.filter(project => project.dates.length)
+
+      // console.log("totalTime -> transformedProjects", transformedProjects)
+      console.log("totalTime -> projects", projects)
+
+
+      // let dates = projects.map(date => date.entries && date.entries)
+
+      // console.log("to talTime -> dates", dates)
+
+      // dates.forEach(date => {
+      //   if (date.entries) {
+      //     date.entries
+      //   }
+      // })
+    })
+
     const assignUserClockifyKey = () => {
       if (clockifyKey.value) {
         $store.dispatch('assignUserClockifyKey', clockifyKey.value)
@@ -99,7 +117,7 @@ export default {
         loading.value = false
     })
 
-    return { clockifyKey, clockifyData, userInfo, assignUserClockifyKey, loading, projectName, setProjectName, tags }
+    return { clockifyKey, clockifyData, userInfo, assignUserClockifyKey, loading, projectName, setProjectName, tags, totalTime }
   }
 }
 </script>

@@ -1,6 +1,8 @@
 import firebase from 'firebase/app'
 import axios from 'axios'
-import { dateTime } from '../../filters/dateTime'
+import moment from 'moment'
+const momentDurationFormatSetup = require("moment-duration-format")
+import { dateTime, isoDurationToTime } from '../../filters/dateTime'
 
 const axiosClockify = axios.create({
   baseURL: 'https://api.clockify.me/api/v1',
@@ -71,6 +73,19 @@ const clockify = {
               }
             })
           })
+
+          if (project.dates.length) {
+            // TODO separate function
+            project.dates.forEach((date: any) => {
+              date.total = []
+              date.entries.forEach((entry: any) => {
+                date.total.push(moment.duration(entry.timeInterval.duration, "minutes").format('m'))
+              })
+              date.total = date.total.reduce((a: any, b: any) => +a + +b)
+              let totalTime = moment.duration(date.total, 'minutes').format('h:mm')
+              date.total = totalTime
+            })
+          }
         }
       })
     }
