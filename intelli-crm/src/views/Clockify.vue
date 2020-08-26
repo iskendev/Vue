@@ -65,7 +65,23 @@ export default {
     const userInfo = computed(() => $store.getters.userInfo)
     const loading = ref(true)
     const clockifyKey = ref('')
-    const projectName = ref('belliata.com')
+    const projectName = computed(() => {
+      if (clockifyData.value) {
+        let projectsLengthArr = [];
+        clockifyData.value.projects.forEach(project => {
+          if (project.dates.length) {
+            projectsLengthArr.push(project.dates.length)
+          }
+        })
+        let max = Math.max.apply(null, projectsLengthArr),
+            name;
+        clockifyData.value.projects.filter(project => {
+          if (project.dates.length == max)
+            name = project.name
+        })
+        return name
+      }
+    })
 
     const assignUserClockifyKey = () => {
       if (clockifyKey.value) {
