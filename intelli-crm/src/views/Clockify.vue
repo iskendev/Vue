@@ -67,32 +67,12 @@ export default {
     const clockifyKey = ref('')
     const projectName = ref('belliata.com')
 
-    const totalTime = computed(() => {
-      let projects = clockifyData.value.projects.filter(project => project.dates.length)
-
-      // console.log("totalTime -> transformedProjects", transformedProjects)
-      console.log("totalTime -> projects", projects)
-
-
-      // let dates = projects.map(date => date.entries && date.entries)
-
-      // console.log("to talTime -> dates", dates)
-
-      // dates.forEach(date => {
-      //   if (date.entries) {
-      //     date.entries
-      //   }
-      // })
-    })
-
     const assignUserClockifyKey = () => {
       if (clockifyKey.value) {
         $store.dispatch('assignUserClockifyKey', clockifyKey.value)
         loading.value = true
       }
     }
-
-    const tags = ref(['one', 'two', 'three'])
 
     const setProjectName = (name) => {
       projectName.value = name
@@ -117,7 +97,7 @@ export default {
         loading.value = false
     })
 
-    return { clockifyKey, clockifyData, userInfo, assignUserClockifyKey, loading, projectName, setProjectName, tags, totalTime }
+    return { clockifyKey, clockifyData, userInfo, assignUserClockifyKey, loading, projectName, setProjectName }
   }
 }
 </script>
