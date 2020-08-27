@@ -14,12 +14,12 @@
         div.time-tracker__projects-email
           span {{ clockifyData.info.email }}
         div.time-tracker__projects-description
-          div.time-tracker__projects-description__single(v-for='project in clockifyData.projects')
+          div.time-tracker__projects-description__single(v-for='name in clockifyDataProjects')
             span.single-title(
-              :class='{highlight_title: project.name === projectName}'
-              @click='setProjectName(project.name)') {{ project.name }}
+              :class='{highlight_title: name === projectTitle}'
+              @click='setProjectName(name)') {{ name }}
         ul.time-tracker__projects-entry(v-for='project in clockifyData.projects')
-          li(v-if='project.name === projectName' v-for='(date, i) in project.dates' :key='i')
+          li(v-if='project.name === projectTitle' v-for='(date, i) in project.dates' :key='i')
             div.entry-date-time
               div.entry-date-time__date
                 span.entry-date-time__date--date {{ date.date }}
@@ -65,22 +65,19 @@ export default {
     const userInfo = computed(() => $store.getters.userInfo)
     const loading = ref(true)
     const clockifyKey = ref('')
-    const projectName = computed(() => {
+    const projectTitle = ref('')
+
+    const clockifyDataProjects = computed(() => {
+      let projectWithEntries = []
       if (clockifyData.value) {
-        let projectsLengthArr = [];
         clockifyData.value.projects.forEach(project => {
-          if (project.dates.length) {
-            projectsLengthArr.push(project.dates.length)
+
+          if (project.dates.length > 0) {
+            projectWithEntries.push(project.name)
           }
         })
-        let max = Math.max.apply(null, projectsLengthArr),
-            name;
-        clockifyData.value.projects.filter(project => {
-          if (project.dates.length == max)
-            name = project.name
-        })
-        return name
       }
+      return projectWithEntries
     })
 
     const assignUserClockifyKey = () => {
@@ -91,7 +88,7 @@ export default {
     }
 
     const setProjectName = (name) => {
-      projectName.value = name
+      projectTitle.value = name
     }
 
     watch(userInfo, async () => {
@@ -105,15 +102,51 @@ export default {
 
     watch(clockifyData, () => {
       loading.value = false
+
+      // TODO separate function
+      if (clockifyData.value) {
+        console.log('sdcsdc');
+        let projectsLengthArr = [];
+        clockifyData.value.projects.forEach(project => {
+          if (project.dates.length) {
+            projectsLengthArr.push(project.dates.length)
+          }
+        })
+        let max = Math.max.apply(null, projectsLengthArr)
+        clockifyData.value.projects.filter(project => {
+          if (project.dates.length == max)
+            projectTitle.value = project.name
+            console.log("setup -> projectTitle.value", projectTitle.value)
+        })
+      }
+
       console.log(clockifyData.value);
     })
 
     onMounted(async () => {
       if (userInfo.value.clockifyKey)
         loading.value = false
+
+
+      // TODO separate function
+      if (clockifyData.value) {
+        console.log('sdcsdc');
+        let projectsLengthArr = [];
+        clockifyData.value.projects.forEach(project => {
+          if (project.dates.length) {
+            projectsLengthArr.push(project.dates.length)
+          }
+        })
+        let max = Math.max.apply(null, projectsLengthArr)
+        clockifyData.value.projects.filter(project => {
+          if (project.dates.length == max)
+            projectTitle.value = project.name
+            console.log("setup -> projectTitle.value", projectTitle.value)
+        })
+      }
     })
 
-    return { clockifyKey, clockifyData, userInfo, assignUserClockifyKey, loading, projectName, setProjectName }
+    return { clockifyKey, clockifyData, userInfo, assignUserClockifyKey, loading, projectTitle, setProjectName, clockifyDataProjects }
   }
 }
 </script>
