@@ -44,6 +44,7 @@
   }
 
   &__projects {
+
     &-email {
       display: flex;
       justify-content: flex-end;
@@ -57,7 +58,7 @@
     &-description {
       margin-top: 25px;
       display: flex;
-      justify-content: space-between;
+      justify-content: space-around;
 
       &__single{
         margin-bottom: 15px;
