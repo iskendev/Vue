@@ -67,6 +67,7 @@ const clockify = {
           project.dates = project.dates.map((date: any) => ({ date, entries: [], isVisible: true }))
 
           project.entries.forEach((entry: any) => {
+            entry.isInputVisible = false
             project.dates.map((date: any) => {
               if (dateTime(entry.timeInterval.start, 'date') === date.date) {
                 date.entries.push(entry)
@@ -116,7 +117,7 @@ const clockify = {
         response = await axiosClockify.get(`/workspaces/${userData.info.defaultWorkspace}/projects`)
         userData.projects = response.data.map((project: any) => ({...project, entries: []}))
 
-        response = await axiosClockify.get(`/workspaces/${userData.info.defaultWorkspace}/user/${userData.info.id}/time-entries?description=#2038 - Products page using Vue`)
+        response = await axiosClockify.get(`/workspaces/${userData.info.defaultWorkspace}/user/${userData.info.id}/time-entries`)
         console.log('hope', response);
 
         const tags = await axiosClockify.get(`/workspaces/${userData.info.defaultWorkspace}/tags`)

@@ -30,7 +30,8 @@
                 div.entry-info
                   div.entry-info__title
                     i.fas.fa-lock(v-if='entry.isLocked')
-                    span.description {{ entry.description }}:
+                    span.description(v-if='!entry.isInputVisible' @click='entry.isInputVisible = true') {{ entry.description }}:
+                    input(v-else  v-model='entry.description')
                     span.client-name {{ entry.clientName }}
                   div.entry-info__details
                     div.entry-tags(v-if='entry.tagIds === null || !entry.tagIds.length' title="No tags")
