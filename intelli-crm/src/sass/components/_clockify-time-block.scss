@@ -1,0 +1,20 @@
+.time-block {
+  height: 300px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+
+  &__time {
+    display: flex;
+    height: 100%;
+    width: 100%;
+
+    &--hours,
+    &--minutes {
+      overflow-y: scroll;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+}

@@ -52,15 +52,17 @@
                       i.far.fa-play-circle
                     div
                       i.fas.fa-ellipsis-h
+      Clockify_TimeBlock
 </template>
 
 <script>
 import { ref, computed, onMounted, watch } from '@vue/composition-api'
 import Input from '../components/Input'
 import Loader from '../components/Loader'
+import Clockify_TimeBlock from '../components/Clockify_TimeBlock'
 export default {
   name: '',
-  components: { Input, Loader },
+  components: { Input, Loader, Clockify_TimeBlock },
   setup(_, { root: { $store } }) {
     const clockifyData = computed(() => $store.getters.clockifyData)
     const userInfo = computed(() => $store.getters.userInfo)
