@@ -1,19 +1,88 @@
+@import '../variables';
+
 .time-block {
-  height: 300px;
-  width: 300px;
+  height: 200px;
+  width: 150px;
   display: flex;
   flex-direction: column;
+  position: absolute;
+  top: 30px;
+  background-color: #fff;
+  z-index: 1;
+  color: $bg-blueish;
+  border-radius: 3px;
+
+
+  &__default {
+    width: 100%;
+    height: 15%;
+
+    input {
+      height: 100%;
+      width: 100%;
+      box-sizing: border-box;
+      border: 0;
+      outline: none;
+      text-align: center;
+      border-top-right-radius: 3px;
+      border-top-left-radius: 3px;
+      color: $bg-dark;
+      font-weight: bold;
+      border-bottom: 1px solid $bg-blueish;
+    }
+  }
 
   &__time {
+    height: 70%;
+    padding: 5px 0;
     display: flex;
-    height: 100%;
-    width: 100%;
+    width: inherit;
+    border-right: 1px solid $bg-light-blueish;
+    border-left: 1px solid $bg-light-blueish;
+    box-sizing: border-box;
+    color: black;
+    font-weight: bold;
 
     &--hours,
-    &--minutes {
-      overflow-y: scroll;
+    &--minutes,
+    &--period {
+      flex: 3;
+      overflow-y: auto;
       display: flex;
       flex-direction: column;
+      width: inherit;
+      height: 100%;
+      text-align: center;
+      font-size: 1.2rem;
+
+      span {
+        padding: 5px 0;
+        cursor: pointer;
+
+        &:hover {
+          background-color: $bg-light-blueish;
+          color: $bg-dark;
+        }
+      }
+    }
+
+    &--period { flex: 2 }
+  }
+
+  &__apply {
+    height: 15%;
+    width: inherit;
+
+    button {
+      width: 100%;
+      height: 100%;
+      background-color: $bg-light-blueish;
+      border: 0;
+      cursor: pointer;
+      border-bottom-right-radius: 3px;
+      border-bottom-left-radius: 3px;
+      color: $bg-dark;
+      font-weight: bold;
     }
   }
 

@@ -80,6 +80,7 @@ const clockify = {
             project.dates.forEach((date: any) => {
               date.total = []
               date.entries.forEach((entry: any) => {
+                entry.isTimeBlockVisible = false
                 date.total.push(moment.duration(entry.timeInterval.duration, "minutes").format('m'))
               })
               date.total = date.total.reduce((a: any, b: any) => +a + +b)

@@ -44,15 +44,17 @@
                       :title='project.billable ? "Billable" : "Non-billable"'
                       :class='project.billable ? "dollar_billable" : "dollar_not_billable"')
                     div.entry-start-end
-                      span {{ entry.timeInterval.start | date('time') }} - {{ entry.timeInterval.end | date('time') }}
+                      span(@click='entry.isTimeBlockVisible = !entry.isTimeBlockVisible') {{ entry.timeInterval.start | date('time') }} -
+                      span(@click='entry.isTimeBlockVisible = !entry.isTimeBlockVisible') {{ entry.timeInterval.end | date('time') }}
                       i.far.fa-calendar-alt
+                      Clockify_TimeBlock(v-if="entry.isTimeBlockVisible")
                     div
                       span {{ entry.timeInterval.duration | iso-duration }}
                     div
                       i.far.fa-play-circle
                     div
                       i.fas.fa-ellipsis-h
-      Clockify_TimeBlock
+
 </template>
 
 <script>

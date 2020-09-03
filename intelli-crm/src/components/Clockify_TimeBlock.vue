@@ -1,30 +1,51 @@
 <template lang='pug'>
   div.time-block
-    input
+    div.time-block__default
+      input(v-model='time')
     div.time-block__time
       div.time-block__time--hours
-        span(v-for='hour in hours') {{ hour }}
+        span(v-for='hour in hours' @click='setTime(hour, "hours")') {{ hour }}
       div.time-block__time--minutes
-        span(v-for='minute in minutes') {{ minute }}
+        span(v-for='minute in minutes' @click='setTime(minute, "minutes")') {{ minute }}
       div.time-block__time--period
-        span AM
-        span PM
+        span.period(@click='setTime("AM", "period")') AM
+        span.period(@click='setTime("PM", "period")') PM
+    div.time-block__apply
+      button Apply
 </template>
 
 <script>
-  import { computed } from '@vue/composition-api'
+  import { computed, ref } from '@vue/composition-api'
   export default {
     name: 'Clockify_TimeBlock',
     setup(_, { root: { $store } }) {
       const hours = computed(() => {
-        return [...Array(24).keys()].unshift()
+        return [...Array(23).keys()].unshift()
       })
 
       const minutes = computed(() => {
         return [...Array(59).keys()].unshift()
       })
 
-      return { hours, minutes }
+
+      // set time
+      const hour = ref('')
+      const minute = ref('')
+      const period = ref('')
+      const time = computed(() => `${hour.value}:${minute.value} ${period.value}`)
+
+      const setTime = (chosenTime, timeValue) => {
+        if (timeValue === 'hours') {
+          hour.value = chosenTime.toString().length < 2 ? '0' + chosenTime : chosenTime
+        } else if (timeValue === 'minutes') {
+          minute.value = chosenTime.toString().length < 2 ? '0' + chosenTime : chosenTime
+        } else {
+          period.value = chosenTime
+        }
+      }
+
+
+      return { hours, minutes, hour, minute, period, time, setTime }
     }
   }
 </script>
