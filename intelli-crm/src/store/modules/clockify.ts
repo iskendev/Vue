@@ -90,6 +90,9 @@ const clockify = {
           }
         }
       })
+    },
+    openTimeBlock(state: any, payload: any) {
+      console.log(state.clockifyData.projects);
     }
   },
   actions: {

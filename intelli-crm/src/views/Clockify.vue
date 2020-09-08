@@ -19,14 +19,14 @@
               :class='{highlight_title: name === projectTitle}'
               @click='setProjectName(name)') {{ name }}
         ul.time-tracker__projects-entry(v-for='project in clockifyData.projects')
-          li(v-if='project.name === projectTitle' v-for='(date, i) in project.dates' :key='i')
+          li(v-if='project.name === projectTitle' v-for='(date, iDate) in project.dates' :key='iDate')
             div.entry-date-time
               div.entry-date-time__date
                 span.entry-date-time__date--date {{ date.date }}
                 span.entry-date-time__date--length(@click='date.isVisible = !date.isVisible') {{ date.entries.length }}
               span Total: {{ date.total }}
             div(v-if='date.isVisible')
-              div.entry-wrapper(v-for='(entry, i) in date.entries' :key='i')
+              div.entry-wrapper(v-for='(entry, iEntry) in date.entries' :key='iEntry')
                 div.entry-info
                   div.entry-info__title
                     i.fas.fa-lock(v-if='entry.isLocked')
@@ -44,8 +44,8 @@
                       :title='project.billable ? "Billable" : "Non-billable"'
                       :class='project.billable ? "dollar_billable" : "dollar_not_billable"')
                     div.entry-start-end
-                      span(@click='entry.isTimeBlockVisible = !entry.isTimeBlockVisible') {{ entry.timeInterval.start | date('time') }} -
-                      span(@click='entry.isTimeBlockVisible = !entry.isTimeBlockVisible') {{ entry.timeInterval.end | date('time') }}
+                      span(@click='openTimeBlock(iDate, iEntry, entry.timeInterval.start, "start")') {{ entry.timeInterval.start | date('time') }} -
+                      span(@click='openTimeBlock(iDate, iEntry, entry.timeInterval.start, "end")') {{ entry.timeInterval.end | date('time') }}
                       i.far.fa-calendar-alt
                       Clockify_TimeBlock(v-if="entry.isTimeBlockVisible")
                     div
@@ -124,6 +124,12 @@ export default {
       }
     }
 
+    // time block
+    const openTimeBlock = (iDate, iEntry, time, period) => {
+      $store.commit('openTimeBlock', {iDate, iEntry})
+      // console.log(iDate, iEntry, time, period);
+    }
+
     // watchers
     watch(userInfo, async () => {
       if (userInfo.value.clockifyKey) {
@@ -157,7 +163,8 @@ export default {
       setProjectName,
       clockifyDataProjects,
       filterProjectsByEntriesLength,
-      setProjectWithMaxEntries
+      setProjectWithMaxEntries,
+      openTimeBlock
     }
   }
 }
