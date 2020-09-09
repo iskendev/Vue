@@ -92,7 +92,8 @@ const clockify = {
       })
     },
     openTimeBlock(state: any, payload: any) {
-      console.log(state.clockifyData.projects);
+      const index = state.clockifyData.projects.findIndex((project: any, index: any) => project.name === payload.projectName)
+      state.clockifyData.projects[index].dates[payload.iDate].entries[payload.iEntry].isTimeBlockVisible = !state.clockifyData.projects[index].dates[payload.iDate].entries[payload.iEntry].isTimeBlockVisible
     }
   },
   actions: {
