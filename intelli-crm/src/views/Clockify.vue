@@ -45,9 +45,11 @@
                       :class='project.billable ? "dollar_billable" : "dollar_not_billable"')
                     div.entry-start-end
                       span(@click='openTimeBlock(project.name, iDate, iEntry, entry.timeInterval.start, "start")') {{ entry.timeInterval.start | date('time') }} -
-                      span(@click='openTimeBlock(project.name, iDate, iEntry, entry.timeInterval.start, "end")') {{ entry.timeInterval.end | date('time') }}
+                      span(@click='openTimeBlock(project.name, iDate, iEntry, entry.timeInterval.end, "end")') {{ entry.timeInterval.end | date('time') }}
                       i.far.fa-calendar-alt
-                      Clockify_TimeBlock(v-if="entry.isTimeBlockVisible")
+                      Clockify_TimeBlock(v-if="entry.isTimeBlockVisible"
+                        :timeBlockValue='timeBlockValue'
+                        :timeBlockPeriod='timeBlockPeriod')
                     div
                       span {{ entry.timeInterval.duration | iso-duration }}
                     div
@@ -62,6 +64,7 @@ import { ref, computed, onMounted, watch } from '@vue/composition-api'
 import Input from '../components/Input'
 import Loader from '../components/Loader'
 import Clockify_TimeBlock from '../components/Clockify_TimeBlock'
+import { dateTime } from '../filters/dateTime'
 export default {
   name: '',
   components: { Input, Loader, Clockify_TimeBlock },
@@ -125,9 +128,14 @@ export default {
     }
 
     // time block
+    const timeBlockValue = ref('')
+    // const timeBlockEnd = ref('')
+    const timeBlockPeriod = ref('')
+
     const openTimeBlock = (projectName, iDate, iEntry, time, period) => {
       $store.commit('openTimeBlock', {projectName, iDate, iEntry})
-      // console.log(iDate, iEntry, time, period);
+      timeBlockPeriod.value = period
+      timeBlockValue.value = dateTime(time, 'time')
     }
 
     // watchers
@@ -164,7 +172,9 @@ export default {
       clockifyDataProjects,
       filterProjectsByEntriesLength,
       setProjectWithMaxEntries,
-      openTimeBlock
+      openTimeBlock,
+      timeBlockValue,
+      timeBlockPeriod
     }
   }
 }

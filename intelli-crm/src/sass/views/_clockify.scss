@@ -202,7 +202,10 @@
 
               .entry-start-end {
                 position: relative;
-                span { letter-spacing: 1px; }
+                span {
+                  letter-spacing: 1px;
+                  cursor: pointer;
+                }
               }
 
               i {
