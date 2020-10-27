@@ -1,5 +1,5 @@
 <template lang='pug'>
-  div
+  div.charts
     h1 Charts
 </template>
 
@@ -14,5 +14,8 @@ export default {
 </script>
 
 <style lang="scss">
-
+.charts {
+  display: flex;
+  flex-direction: column;
+}
 </style>
